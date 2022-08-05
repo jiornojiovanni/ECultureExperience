@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
