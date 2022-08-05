@@ -11,4 +11,13 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow" translatable="false">Slideshow</string>
     <string name="menu_logout" translatable="false">Logout</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password" translatable="false">Password</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="welcome">Welcome</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >8 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
