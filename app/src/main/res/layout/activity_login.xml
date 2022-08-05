@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="256dp"
         android:autofillHints=""
-        android:background="@drawable/component"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
