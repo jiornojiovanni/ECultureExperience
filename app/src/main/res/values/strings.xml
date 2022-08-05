@@ -10,4 +10,5 @@
     <string name="menu_home" translatable="false">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow" translatable="false">Slideshow</string>
+    <string name="menu_logout" translatable="false">Logout</string>
 </resources>
