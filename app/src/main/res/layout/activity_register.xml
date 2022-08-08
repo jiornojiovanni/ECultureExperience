@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2B8834F"
+    android:background="@drawable/background"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -16,10 +16,11 @@
         android:id="@+id/scrollView4"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/edittext"
+        android:background="@drawable/register_shape"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:fillViewport="true">
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +30,7 @@
             android:baselineAligned="false">
 
             <EditText
-                android:id="@+id/username_reg"
+                android:id="@+id/email_reg"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
@@ -42,7 +43,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/age" />
+                app:layout_constraintTop_toBottomOf="@+id/age"
+                android:autofillHints="Email" />
 
             <EditText
                 android:id="@+id/name"
@@ -57,7 +59,8 @@
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signUp" />
+                app:layout_constraintTop_toBottomOf="@+id/signUp"
+                android:autofillHints="Name" />
 
             <EditText
                 android:id="@+id/Lastname"
@@ -73,7 +76,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                android:autofillHints="Lastname" />
 
             <EditText
                 android:id="@+id/password_reg"
@@ -89,7 +93,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_reg" />
+                app:layout_constraintTop_toBottomOf="@+id/email_reg"
+                android:autofillHints="Password" />
 
             <EditText
                 android:id="@+id/age"
@@ -105,12 +110,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Lastname" />
+                app:layout_constraintTop_toBottomOf="@+id/Lastname"
+                android:autofillHints="Age" />
 
             <Button
                 android:id="@+id/register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="24dp"
                 android:enabled="false"
                 android:text="@string/action_register"
@@ -125,7 +131,7 @@
                 app:rippleColor="@color/brown_700" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/alreadyreg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -138,7 +144,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/logo"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
@@ -146,7 +152,8 @@
                 app:layout_constraintHorizontal_bias="0.071"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/colosseum_1" />
+                app:srcCompat="@drawable/colosseum_1"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/signUp"
@@ -160,7 +167,7 @@
                 android:textSize="33sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.163"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/logo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -172,7 +179,7 @@
                 android:textColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.037"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/alreadyreg"
                 app:layout_constraintTop_toBottomOf="@+id/register" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
