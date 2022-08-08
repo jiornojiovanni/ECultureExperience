@@ -11,4 +11,5 @@
     <string name="login_failed">Login fallito</string>
     <string name="welcome">Benvenuto</string>
     <string name="action_register">Registrati</string>
+    <string name="no_account">Non hai un account?</string>
 </resources>
