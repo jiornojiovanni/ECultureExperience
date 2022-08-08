@@ -17,4 +17,5 @@
     <string name="already_registered">Già registrato?</string>
     <string name="login">Accedi</string>
     <string name="signup">Registrazione</string>
+    <string name="no_account">Non hai un account?</string>
 </resources>
