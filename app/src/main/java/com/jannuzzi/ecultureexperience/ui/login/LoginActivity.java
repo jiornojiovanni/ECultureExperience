@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.jannuzzi.ecultureexperience.MainActivity;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.databinding.ActivityLoginBinding;
+import com.jannuzzi.ecultureexperience.ui.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -126,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 goToRegister();
             }
         });
@@ -138,8 +140,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToRegister() {
-       // Intent intent =new Intent(this, RegisterActivity.class);
-        //startActivity(intent);
+        Intent intent =new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
