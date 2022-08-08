@@ -11,4 +11,10 @@
     <string name="login_failed">Login fallito</string>
     <string name="welcome">Benvenuto</string>
     <string name="action_register">Registrati</string>
+    <string name="name">Nome</string>
+    <string name="lastname">Cognome</string>
+    <string name="age">Età</string>
+    <string name="already_registered">Già registrato?</string>
+    <string name="login">Accedi</string>
+    <string name="signup">Registrazione</string>
 </resources>

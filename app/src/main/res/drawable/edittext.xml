@@ -9,5 +9,11 @@
         android:bottomRightRadius="10dp"
         android:bottomLeftRadius="10dp"
         android:topLeftRadius="10dp"
-        android:topRightRadius="10dp" />
+        android:topRightRadius="10dp"
+        />
+    <stroke
+        android:width="4dp"
+        android:color="@color/brown_200" />
+
+
 </shape>
