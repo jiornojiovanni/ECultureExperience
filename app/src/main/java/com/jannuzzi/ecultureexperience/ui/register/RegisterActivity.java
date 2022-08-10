@@ -16,16 +16,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_percorsi);
+        setContentView(R.layout.activity_register);
 
-        /*textView=(TextView)findViewById(R.id.login);
+        textView=(TextView)findViewById(R.id.login);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
 
