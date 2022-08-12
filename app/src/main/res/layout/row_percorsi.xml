@@ -11,11 +11,11 @@
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-
         android:layout_margin="8dp"
-        card_view:cardBackgroundColor="#FFF8E1"
+        android:clickable="true"
+
+        android:focusable="true"
+        card_view:cardBackgroundColor="@color/brown_50"
         card_view:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -25,13 +25,15 @@
             android:orientation="vertical">
 
             <!-- Media -->
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivCard"
                 android:layout_width="match_parent"
                 android:layout_height="194dp"
-
                 android:scaleType="centerCrop"
-                card_view:srcCompat="@drawable/colosseum_1"
-                tools:srcCompat="@drawable/colosseum_1" />
+                card_view:shapeAppearance="@style/cornerIV"
+                card_view:srcCompat="@drawable/background"
+                tools:ignore="ImageContrastCheck"
+                />
 
 
             <LinearLayout
@@ -42,6 +44,7 @@
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
+                    android:id="@+id/cardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Titolo"
@@ -57,7 +60,7 @@
                     android:orientation="horizontal">
 
                     <android.widget.RatingBar
-                        android:id="@+id/myRatingBar"
+                        android:id="@+id/smallRatingBar"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -66,15 +69,18 @@
                         android:numStars="5" />
 
                     <TextView
+                        android:id="@+id/cardRatingText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"
                         android:text="4,5(237)"
                         android:textColor="@color/brown_200"
-                        android:textSize="12dp" />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvCardSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -84,36 +90,17 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/tvCardSupport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Testo di supporto"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="@color/brown_200"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
-            <!-- Buttons -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal">
-
-                <Button
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Azione 1" />
-
-                <Button
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Azione 2" />
-            </LinearLayout>
 
         </LinearLayout>
 
