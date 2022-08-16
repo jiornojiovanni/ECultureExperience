@@ -26,4 +26,6 @@
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
     <string name="no_account">You have\'t an account?</string>
+    <string name="completed_routes">Completed routes</string>
+    <string name="completed_games">Completed games</string>
 </resources>

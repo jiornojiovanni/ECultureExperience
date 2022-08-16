@@ -18,4 +18,6 @@
     <string name="login">Accedi</string>
     <string name="signup">Registrazione</string>
     <string name="no_account">Non hai un account?</string>
+    <string name="completed_routes">Percorsi completati</string>
+    <string name="completed_games">Giochi completati</string>
 </resources>

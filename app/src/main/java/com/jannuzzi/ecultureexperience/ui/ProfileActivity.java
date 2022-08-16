@@ -1,8 +1,10 @@
-package com.jannuzzi.ecultureexperience;
+package com.jannuzzi.ecultureexperience.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.jannuzzi.ecultureexperience.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
