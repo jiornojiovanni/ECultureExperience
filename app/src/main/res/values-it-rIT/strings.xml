@@ -18,4 +18,6 @@
     <string name="login">Accedi</string>
     <string name="signup">Registrazione</string>
     <string name="no_account">Non hai un account?</string>
+    <string name="loading">Caricamento...</string>
+    <string name="load_json">Carica il percorso json</string>
 </resources>
