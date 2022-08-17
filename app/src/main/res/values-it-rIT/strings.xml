@@ -20,4 +20,6 @@
     <string name="no_account">Non hai un account?</string>
     <string name="loading">Caricamento...</string>
     <string name="load_json">Carica il percorso json</string>
+    <string name="rate">Valuta</string>
+    <string name="rate_shared">Grazie del tuo feedback!</string>
 </resources>
