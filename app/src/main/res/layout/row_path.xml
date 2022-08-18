@@ -9,20 +9,20 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_event"
-        android:layout_width="377dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="32dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
+        app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp"
+        app:strokeColor="@color/black"
         card_view:cardBackgroundColor="@color/brown_50"
-        card_view:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:strokeColor="@color/black">
+        card_view:cardCornerRadius="20dp">
 
 
         <LinearLayout
@@ -35,8 +35,7 @@
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="10dp"
             android:layout_toStartOf="@+id/checkBox2"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <LinearLayout
                 style="?attr/materialCardViewOutlinedStyle"
