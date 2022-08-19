@@ -50,23 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if( checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent chooseFile;
-                    Intent intent;
-                    chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
-                    chooseFile.setType("text/*");
-                    intent = Intent.createChooser(chooseFile, "Choose a file");
-                    startActivityForResult(intent, JSON_CONFIG);
-                } else {
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_PERMISSION);
-                }
+        binding.appBarMain.fab.setOnClickListener(view -> {
+            if( checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                pickFile();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        READ_PERMISSION);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -82,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    private void pickFile() {
+        Intent chooseFile;
+        Intent intent;
+        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+        chooseFile.setType("text/*");
+        intent = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(intent, JSON_CONFIG);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, R.string.succesful_permission, Toast.LENGTH_SHORT).show();
+                    pickFile();
                 }  else {
                     Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
                 }
@@ -117,18 +118,14 @@ public class MainActivity extends AppCompatActivity {
 
         while(reader.hasNext()) {
             String token = reader.nextName();
-            switch (token) {
-                case "name":
-                    name = reader.nextString();
-                    break;
-                case "description":
-                    description = reader.nextString();
-                    break;
-                case "tag":
-                    tag = reader.nextString();
-                    break;
-                default:
-                    reader.skipValue();
+            if ("name".equals(token)) {
+                name = reader.nextString();
+            } else if ("description".equals(token)) {
+                description = reader.nextString();
+            } else if ("tag".equals(token)) {
+                tag = reader.nextString();
+            } else {
+                reader.skipValue();
             }
         }
 
@@ -137,41 +134,47 @@ public class MainActivity extends AppCompatActivity {
         return new Path(name, description, tag);
     }
 
+    private void parsePathJson(Intent data) throws IOException {
+        InputStream stream = getContentResolver().openInputStream(data.getData());
+        JsonReader reader = new JsonReader(new InputStreamReader(stream));
+
+        reader.beginArray();
+        while(reader.hasNext()) {
+            pathList.add(readPath(reader));
+        }
+        reader.endArray();
+    }
+
+    private void displayPaths() {
+        LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        mainLayout.removeView(findViewById(R.id.tvLoadPath));
+
+        for (Path path: pathList) {
+            LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
+
+            ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
+            ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
+            ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
+
+            layoutCard.findViewById(R.id.card).setOnClickListener(view -> {
+                Toast.makeText(this, "Ciao sono il " + path.getName(), Toast.LENGTH_SHORT).show();
+            });
+
+            mainLayout.addView(layoutCard);
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == JSON_CONFIG) {
             try {
-                InputStream stream = getContentResolver().openInputStream(data.getData());
-                JsonReader reader = new JsonReader(new InputStreamReader(stream));
-
-                reader.beginArray();
-                while(reader.hasNext()) {
-                    pathList.add(readPath(reader));
-                }
-                reader.endArray();
-
-
-                LinearLayout mainLayout = findViewById(R.id.mainLayout);
-                mainLayout.removeView(findViewById(R.id.tvLoadPath));
-
-                    for (Path path: pathList) {
-                        LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
-
-                        ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
-                        ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
-                        ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
-
-                        layoutCard.findViewById(R.id.card).setOnClickListener(v -> {
-                            Toast.makeText(this, "Ciao sono il " + path.getName(), Toast.LENGTH_SHORT).show();
-                        });
-
-                        mainLayout.addView(layoutCard);
-                    }
-
+                parsePathJson(data);
+                displayPaths();
             } catch (IOException  e) {
                 Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
             }
         }
     }
+
 }
