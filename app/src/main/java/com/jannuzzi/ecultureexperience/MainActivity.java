@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -19,11 +20,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int READ_PERMISSION = 208;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private List<Path> pathList = new ArrayList<>();
 
 
 
@@ -105,17 +110,50 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    private Path readPath(JsonReader reader) throws IOException {
+        reader.beginObject();
+        String name = "", description = "", tag = "";
+
+        while(reader.hasNext()) {
+            String token = reader.nextName();
+            switch (token) {
+                case "name":
+                    name = reader.nextString();
+                    break;
+                case "description":
+                    description = reader.nextString();
+                    break;
+                case "tag":
+                    tag = reader.nextString();
+                    break;
+                default:
+                    reader.skipValue();
+            }
+        }
+
+        reader.endObject();
+
+        return new Path(name, description, tag);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == JSON_CONFIG) {
             try {
                 InputStream stream = getContentResolver().openInputStream(data.getData());
-                Scanner scanner = new Scanner(stream);
-                while (scanner.hasNext()) {
-                    Log.w("test", scanner.next());
+                JsonReader reader = new JsonReader(new InputStreamReader(stream));
+
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    pathList.add(readPath(reader));
                 }
-            } catch (IOException e) {
+
+                reader.endArray();
+                for (Path path: pathList) {
+                    Log.w("percorsi", path.toString());
+                }
+            } catch (IOException  e) {
                 e.printStackTrace();
             }
         }
