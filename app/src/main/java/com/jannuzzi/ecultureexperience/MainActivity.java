@@ -63,11 +63,9 @@ public class MainActivity extends AppCompatActivity {
                     intent = Intent.createChooser(chooseFile, "Choose a file");
                     startActivityForResult(intent, JSON_CONFIG);
                 } else {
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                READ_PERMISSION);
-                    }
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            READ_PERMISSION);
                 }
             }
         });
@@ -92,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
             case READ_PERMISSION:
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permessi ricevuti, puoi caricare il file adesso.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.succesful_permission, Toast.LENGTH_SHORT).show();
                 }  else {
-                    Toast.makeText(this, "Permessi rifiutati, non puoi procedere con il caricamento del file.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
             } catch (IOException  e) {
-                Toast.makeText(this, "File percorso non supportato", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
             }
         }
     }

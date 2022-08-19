@@ -22,4 +22,7 @@
     <string name="load_json">Carica il percorso json</string>
     <string name="rate">Valuta</string>
     <string name="rate_shared">Grazie del tuo feedback!</string>
+    <string name="succesful_permission">Permessi ricevuti, puoi caricare il file adesso.</string>
+    <string name="refused_permission">Permessi rifiutati, non puoi procedere con il caricamento del file.</string>
+    <string name="error_loading">Non è possibile caricare il file. Formato non valido.</string>
 </resources>
