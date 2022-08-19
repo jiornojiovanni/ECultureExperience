@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent;
                     chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
                     chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
-                    chooseFile.setType("application/octet-stream");
+                    chooseFile.setType("text/*");
                     intent = Intent.createChooser(chooseFile, "Choose a file");
                     startActivityForResult(intent, JSON_CONFIG);
                 } else {
