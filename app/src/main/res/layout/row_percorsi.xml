@@ -32,8 +32,7 @@
                 android:scaleType="centerCrop"
                 card_view:shapeAppearance="@style/cornerIV"
                 card_view:srcCompat="@drawable/background"
-                tools:ignore="ImageContrastCheck"
-                />
+                tools:ignore="ImageContrastCheck" />
 
 
             <LinearLayout

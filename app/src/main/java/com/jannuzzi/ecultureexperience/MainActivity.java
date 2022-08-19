@@ -8,6 +8,9 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -148,13 +151,28 @@ public class MainActivity extends AppCompatActivity {
                 while(reader.hasNext()) {
                     pathList.add(readPath(reader));
                 }
-
                 reader.endArray();
-                for (Path path: pathList) {
-                    Log.w("percorsi", path.toString());
-                }
+
+
+                LinearLayout mainLayout = findViewById(R.id.mainLayout);
+                mainLayout.removeView(findViewById(R.id.tvLoadPath));
+
+                    for (Path path: pathList) {
+                        LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
+
+                        ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
+                        ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
+                        ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
+
+                        layoutCard.findViewById(R.id.card).setOnClickListener(v -> {
+                            Toast.makeText(this, "Ciao sono il " + path.getName(), Toast.LENGTH_SHORT).show();
+                        });
+
+                        mainLayout.addView(layoutCard);
+                    }
+
             } catch (IOException  e) {
-                e.printStackTrace();
+                Toast.makeText(this, "File percorso non supportato", Toast.LENGTH_LONG).show();
             }
         }
     }
