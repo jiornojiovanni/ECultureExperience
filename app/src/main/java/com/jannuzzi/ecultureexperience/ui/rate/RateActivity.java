@@ -17,20 +17,23 @@ import com.jannuzzi.ecultureexperience.ui.register.RegisterActivity;
 
 public class RateActivity extends AppCompatActivity {
 
+    TextView cardTitle, tvCardSecond;
+
     public void onCreate(Bundle savedInstanceState) {
         final Button rate;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
 
-        rate =  findViewById(R.id.rate_confirm);
-        rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                goToMain();
-                successRate();
+        cardTitle = findViewById(R.id.cardTitle);
+        tvCardSecond = findViewById(R.id.tvCardSecond);
+        cardTitle.setText(getIntent().getExtras().getString("name"));
+        tvCardSecond.setText(getIntent().getExtras().getString("description"));
 
-            }
+        rate =  findViewById(R.id.rate_confirm);
+        rate.setOnClickListener(view -> {
+            finish();
+            goToMain();
+            successRate();
         });
     }
 

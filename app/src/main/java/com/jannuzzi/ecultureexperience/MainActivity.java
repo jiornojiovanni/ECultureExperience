@@ -25,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
+import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private List<Path> pathList = new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +85,14 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-            case READ_PERMISSION:
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, R.string.succesful_permission, Toast.LENGTH_SHORT).show();
-                    pickFile();
-                }  else {
-                    Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
-                }
+        if (requestCode == READ_PERMISSION) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, R.string.succesful_permission, Toast.LENGTH_SHORT).show();
+                pickFile();
+            } else {
+                Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -156,8 +154,15 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
             ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
 
-            layoutCard.findViewById(R.id.card).setOnClickListener(view -> {
-                Toast.makeText(this, "Ciao sono il " + path.getName(), Toast.LENGTH_SHORT).show();
+            layoutCard.findViewById(R.id.rateButton).setOnClickListener(view -> {
+                Bundle data = new Bundle();
+                data.putString("name", path.getName());
+                data.putString("description", path.getDescription());
+
+                Intent intent = new Intent(this, RateActivity.class);
+                intent.putExtras(data);
+
+                startActivity(intent);
             });
 
             mainLayout.addView(layoutCard);
