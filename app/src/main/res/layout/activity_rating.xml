@@ -102,12 +102,11 @@
 
                     <Button
                         android:id="@+id/rate_confirm"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rate" />
-
-
+                        android:layout_gravity="center"
+                        android:text="@string/rate"
+                        android:enabled="false"/>
                 </LinearLayout>
 
             </LinearLayout>

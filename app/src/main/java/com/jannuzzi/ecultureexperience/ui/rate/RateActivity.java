@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,32 +19,36 @@ import com.jannuzzi.ecultureexperience.ui.register.RegisterActivity;
 public class RateActivity extends AppCompatActivity {
 
     TextView cardTitle, tvCardSecond;
+    RatingBar bar;
+    Button rate;
 
     public void onCreate(Bundle savedInstanceState) {
-        final Button rate;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
 
         cardTitle = findViewById(R.id.cardTitle);
         tvCardSecond = findViewById(R.id.tvCardSecond);
+        bar = findViewById(R.id.smallRatingBar);
+
         cardTitle.setText(getIntent().getExtras().getString("name"));
         tvCardSecond.setText(getIntent().getExtras().getString("description"));
 
+        bar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+           rate.setEnabled(true);
+        });
+
         rate =  findViewById(R.id.rate_confirm);
         rate.setOnClickListener(view -> {
-            finish();
-            goToMain();
             successRate();
+            finish();
         });
     }
 
-    private void goToMain() {
-        Intent intent=new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
     private void successRate() {
-        String rated = getString(R.string.rate_shared);
-        Toast.makeText(getApplicationContext(), rated, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.rate_shared, Toast.LENGTH_SHORT).show();
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Ho visitato " + cardTitle.getText() + "\nRecensione:  " + bar.getRating() + " ⭐" );
+        startActivity(Intent.createChooser(shareIntent, "condividi con"));
     }
 }
