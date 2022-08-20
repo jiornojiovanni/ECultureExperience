@@ -48,7 +48,7 @@ public class RateActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), R.string.rate_shared, Toast.LENGTH_SHORT).show();
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Ho visitato " + cardTitle.getText() + "\nRecensione:  " + bar.getRating() + " ⭐" );
-        startActivity(Intent.createChooser(shareIntent, "condividi con"));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.i_visited) + " " + cardTitle.getText() + "\n" +getString(R.string.review) + bar.getRating() + " ⭐" );
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with)));
     }
 }

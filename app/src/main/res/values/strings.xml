@@ -33,4 +33,7 @@
     <string name="succesful_permission">Permission received, now you can load the file</string>
     <string name="refused_permission">Permission refused, can\'t proceed with file loading.</string>
     <string name="error_loading">Can\'t load the file. Format not valid.</string>
+    <string name="share_with">Share with</string>
+    <string name="i_visited">I visited</string>
+    <string name="review">Review:</string>
 </resources>
