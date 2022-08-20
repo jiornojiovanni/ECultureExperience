@@ -3,13 +3,14 @@ package com.jannuzzi.ecultureexperience;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +23,24 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private List<Path> pathList = new ArrayList<>();
+    private StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        storageRef = FirebaseStorage.getInstance().getReference();
     }
 
     private void pickFile() {
@@ -111,9 +123,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Path readPath(JsonReader reader) throws IOException {
-        reader.beginObject();
-        String name = "", description = "", tag = "";
+        String name = "";
+        String description = "";
+        String tag = "";
+        String imagePath = "";
 
+        reader.beginObject();
         while(reader.hasNext()) {
             String token = reader.nextName();
             if ("name".equals(token)) {
@@ -122,14 +137,16 @@ public class MainActivity extends AppCompatActivity {
                 description = reader.nextString();
             } else if ("tag".equals(token)) {
                 tag = reader.nextString();
-            } else {
+            } else if ("imagePath".equals(token)) {
+                imagePath = reader.nextString();
+            }
+            else {
                 reader.skipValue();
             }
         }
-
         reader.endObject();
 
-        return new Path(name, description, tag);
+        return new Path(name, description, tag, imagePath);
     }
 
     private void parsePathJson(Intent data) throws IOException {
@@ -143,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         reader.endArray();
     }
 
-    private void displayPaths() {
+    private void displayPaths() throws InterruptedException, IOException {
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
 
@@ -165,6 +182,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             });
 
+            StorageReference imgPath = storageRef.child(path.getImagePath());
+            imgPath.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                ((ShapeableImageView) layoutCard.findViewById(R.id.ivCard)).setImageBitmap(bmp);
+            });
+
             mainLayout.addView(layoutCard);
         }
     }
@@ -176,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 parsePathJson(data);
                 displayPaths();
-            } catch (IOException  e) {
+            } catch (IOException | InterruptedException e) {
                 Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
             }
         }
