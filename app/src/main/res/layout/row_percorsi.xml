@@ -53,30 +53,6 @@
                     android:textStyle="bold" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <android.widget.RatingBar
-                        android:id="@+id/smallRatingBar"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:isIndicator="true"
-
-                        android:numStars="5" />
-
-                    <TextView
-                        android:id="@+id/cardRatingText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="4,5(237)"
-                        android:textColor="@color/brown_200"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvCardSecond"
