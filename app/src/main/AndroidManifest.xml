@@ -36,6 +36,9 @@
             android:theme="@style/Theme.ECultureExperience.NoActionBar"
             android:windowSoftInputMode="adjustPan">
         </activity>
+        <meta-data
+            android:name="android.support.PARENTACTIVITY"
+            android:value=".MainActivity"/>
         <activity
             android:name=".ui.rate.RateActivity"
             android:exported="true"
