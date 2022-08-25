@@ -43,7 +43,7 @@
         <activity
             android:name=".ui.QuizActivity"
             android:exported="true"
-            android:theme="@style/Theme.ECultureExperience.NoActionBar"></activity
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"></activity>
         <meta-data
             android:name="android.support.PARENTACTIVITY"
             android:value=".MainActivity"/>
