@@ -172,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
 
             layoutCard.findViewById(R.id.rateButton).setOnClickListener(view -> {
+                layoutCard.findViewById(R.id.rateButton).setEnabled(false);
+
                 Bundle data = new Bundle();
                 data.putString("name", path.getName());
                 data.putString("description", path.getDescription());
