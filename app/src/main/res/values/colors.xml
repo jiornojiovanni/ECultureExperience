@@ -11,7 +11,9 @@
     <color name="brown_200">#FF775C46</color>
     <color name="brown_500">#5A422F</color>
     <color name="brown_700">#422F21</color>
+    <color name= "completed_event">#28CC2F</color>
+    <color name= "light_gray">#A0A2A0</color>
+    <color name="transparent">#00EFEFEF</color>
+    <color name="green">#31C537</color>
     <color name="brown_50">#FFF8E1</color>
-
-
 </resources>
