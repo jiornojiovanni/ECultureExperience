@@ -15,5 +15,8 @@
     <color name= "light_gray">#A0A2A0</color>
     <color name="transparent">#00EFEFEF</color>
     <color name="green">#31C537</color>
+    <color name="light_brown">#D3894D</color>
     <color name="brown_50">#FFF8E1</color>
+
+
 </resources>
