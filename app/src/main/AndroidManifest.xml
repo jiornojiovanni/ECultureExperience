@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ECultureExperience">
+
         <activity
             android:name=".ui.ProfileActivity"
             android:exported="true"
@@ -38,8 +39,11 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ECultureExperience.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity> 
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".ui.QuizActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"></activity>
         <meta-data
             android:name="android.support.PARENTACTIVITY"
             android:value=".MainActivity"/>
