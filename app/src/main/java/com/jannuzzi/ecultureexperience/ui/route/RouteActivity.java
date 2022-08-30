@@ -5,8 +5,12 @@ import android.os.Environment;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.jannuzzi.ecultureexperience.R;
@@ -26,21 +30,32 @@ public class RouteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_path);
+        setContentView(R.layout.activity_route);
 
         String pathFile = getIntent().getExtras().getString("pathFile");
         InputStream fileContent = readPathFile(pathFile);
         List<Route> instructions = parsePathFile(fileContent);
-        Log.w("path", instructions.toString());
 
-        MaterialCardView view = findViewById(R.id.card_event);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialCardView card = (MaterialCardView) view;
-                card.setChecked(!card.isChecked());
-            }
-        });
+        LinearLayout layout = findViewById(R.id.routeLayout);
+
+        for (Route route:
+             instructions) {
+            LinearLayout row = (LinearLayout) getLayoutInflater().inflate(R.layout.row_path, null);
+            MaterialCardView view = row.findViewById(R.id.card_event);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MaterialCardView card = (MaterialCardView) view;
+                    card.setChecked(!card.isChecked());
+                }
+            });
+            ((TextView) view.findViewById(R.id.title)).setText(route.getTitle());
+            ((TextView) view.findViewById(R.id.description)).setText(route.getDescription());
+
+            layout.addView(row);
+        }
+
+
     }
 
     private InputStream readPathFile(String name) {
