@@ -72,9 +72,9 @@ public class LightningShooter extends View {
     protected void onDraw(Canvas canvas) {
         // Draw background, Points and life on Canvas
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawText("Pt: " + points, 50, TEXT_SIZE+30, scorePaint);
+        canvas.drawText("Pt: " + points, 50, TEXT_SIZE+20, scorePaint);
         for(int i=life; i>=1; i--){
-            canvas.drawBitmap(lifeImage, screenWidth- 50 - lifeImage.getWidth() * i, 30, null);
+            canvas.drawBitmap(lifeImage, screenWidth- 50 - lifeImage.getWidth() * i, 45, null);
         }
         // When life becomes 0, stop game and launch GameOver Activity with points
         if(life == 0){

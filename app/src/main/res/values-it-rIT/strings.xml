@@ -30,4 +30,6 @@
     <string name="share_with">Condividi con</string>
     <string name="i_visited">Ho visitato</string>
     <string name="review">Recensione:</string>
+    <string name="play">Gioca</string>
+    <string name="points">Punteggio:</string>
 </resources>

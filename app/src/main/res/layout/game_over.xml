@@ -34,15 +34,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Points: "
-            android:textColor="#330022"
-            android:textSize="18sp" />
+            android:text="@string/points"
+            android:textColor="@color/brown_700"
+            android:textStyle="bold"
+            android:shadowColor="@color/brown_50"
+            android:shadowRadius="10"
+            android:textSize="35sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvPoints"
-            android:text="Points: "
-            android:textColor="#330022"
+            android:textStyle="bold"
+            android:shadowColor="@color/brown_50"
+            android:shadowRadius="10"
+            android:text="@string/points"
+            android:textColor="@color/brown_700"
             android:textSize="40sp" />
     </LinearLayout>
 
