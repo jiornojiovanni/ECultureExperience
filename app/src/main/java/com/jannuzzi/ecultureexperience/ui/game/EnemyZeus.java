@@ -28,11 +28,11 @@ public class EnemyZeus {
         return enemyZeus;
     }
 
-    int getEnemySpaceshipWidth(){
+    int getEnemyZeusWidth(){
         return enemyZeus.getWidth();
     }
 
-    int getEnemySpaceshipHeight(){
+    int getEnemyZeusHeight(){
         return enemyZeus.getHeight();
     }
 }

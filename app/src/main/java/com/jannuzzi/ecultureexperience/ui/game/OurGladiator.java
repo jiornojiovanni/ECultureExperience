@@ -26,7 +26,7 @@ public class OurGladiator {
         return ourGladiator;
     }
 
-    int getOurSpaceshipWidth(){
+    int getOurGladiatorWidth(){
         return ourGladiator.getWidth();
     }
 }

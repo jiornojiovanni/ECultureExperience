@@ -85,48 +85,48 @@ public class LightningShooter extends View {
             context.startActivity(intent);
             ((Activity) context).finish();
         }
-        // Move enemySpaceship
+        // Move enemyZeus
         enemyZeus.ex += enemyZeus.enemyVelocity;
-        // If enemySpaceship collides with right wall, reverse enemyVelocity
-        if(enemyZeus.ex + enemyZeus.getEnemySpaceshipWidth() >= screenWidth){
+        // If enemyZeus collides with right wall, reverse enemyVelocity
+        if(enemyZeus.ex + enemyZeus.getEnemyZeusWidth() >= screenWidth){
             enemyZeus.enemyVelocity *= -1;
         }
-        // If enemySpaceship collides with left wall, again reverse enemyVelocity
+        // If enemyZeus collides with left wall, again reverse enemyVelocity
         if(enemyZeus.ex <=0){
             enemyZeus.enemyVelocity *= -1;
         }
         // Till enemyShotAction is false, enemy should fire shots from random travelled distance
         if(enemyShotAction == false){
             if(enemyZeus.ex >= 200 + random.nextInt(400)){
-                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemySpaceshipWidth() / 2, enemyZeus.ey );
+                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemyZeusWidth() / 2, enemyZeus.ey );
                 enemyShots.add(enemyShot);
                 // We're making enemyShotAction to true so that enemy can take a short at a time
                 enemyShotAction = true;
             }
             if(enemyZeus.ex >= 400 + random.nextInt(800)){
-                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemySpaceshipWidth() / 2, enemyZeus.ey );
+                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemyZeusWidth() / 2, enemyZeus.ey );
                 enemyShots.add(enemyShot);
                 // We're making enemyShotAction to true so that enemy can take a short at a time
                 enemyShotAction = true;
             }
             else{
-                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemySpaceshipWidth() / 2, enemyZeus.ey );
+                Shot enemyShot = new Shot(context, enemyZeus.ex + enemyZeus.getEnemyZeusWidth() / 2, enemyZeus.ey );
                 enemyShots.add(enemyShot);
                 // We're making enemyShotAction to true so that enemy can take a short at a time
                 enemyShotAction = true;
             }
         }
-        // Draw the enemy Spaceship
+        // Draw the enemy zeus
         canvas.drawBitmap(enemyZeus.getEnemyZeus(), enemyZeus.ex, enemyZeus.ey, null);
-        // Draw our spaceship between the left and right edge of the screen
-        if(ourGladiator.ox > screenWidth - ourGladiator.getOurSpaceshipWidth()){
-            ourGladiator.ox = screenWidth - ourGladiator.getOurSpaceshipWidth();
+        // Draw our gladiator between the left and right edge of the screen
+        if(ourGladiator.ox > screenWidth - ourGladiator.getOurGladiatorWidth()){
+            ourGladiator.ox = screenWidth - ourGladiator.getOurGladiatorWidth();
         }else if(ourGladiator.ox < 0){
             ourGladiator.ox = 0;
         }
-        // Draw our Spaceship
+        // Draw our gladiator
         canvas.drawBitmap(ourGladiator.getOurGladiator(), ourGladiator.ox, ourGladiator.oy, null);
-        // Draw the enemy shot downwards our spaceship and if it's being hit, decrement life, remove
+        // Draw the enemy shot downwards our gladiator and if it's being hit, decrement life, remove
         // the shot object from enemyShots ArrayList and show an explosion.
         // Else if, it goes away through the bottom edge of the screen also remove
         // the shot object from enemyShots.
@@ -136,7 +136,7 @@ public class LightningShooter extends View {
             enemyShots.get(i).shy += 15;
             canvas.drawBitmap(enemyShots.get(i).getShot(), enemyShots.get(i).shx, enemyShots.get(i).shy, null);
             if((enemyShots.get(i).shx >= ourGladiator.ox)
-                && enemyShots.get(i).shx <= ourGladiator.ox + ourGladiator.getOurSpaceshipWidth()
+                && enemyShots.get(i).shx <= ourGladiator.ox + ourGladiator.getOurGladiatorWidth()
                 && enemyShots.get(i).shy >= ourGladiator.oy
                 && enemyShots.get(i).shy <= screenHeight){
                 life--;
@@ -150,16 +150,16 @@ public class LightningShooter extends View {
                 enemyShotAction = false;
             }
         }
-        // Draw our spaceship shots towards the enemy. If there is a collision between our shot and enemy
-        // spaceship, increment points, remove the shot from ourShots and create a new Explosion object.
+        // Draw our gladiator shots towards the enemy. If there is a collision between our shot and enemy
+        // zeus, increment points, remove the shot from ourShots and create a new Explosion object.
         // Else if, our shot goes away through the top edge of the screen also remove
         // the shot object from enemyShots ArrayList.
         for(int i=0; i < ourShots.size(); i++){
             ourShots.get(i).shy -= 15;
             canvas.drawBitmap(ourShots.get(i).getShot(), ourShots.get(i).shx, ourShots.get(i).shy, null);
             if((ourShots.get(i).shx >= enemyZeus.ex)
-               && ourShots.get(i).shx <= enemyZeus.ex + enemyZeus.getEnemySpaceshipWidth()
-               && ourShots.get(i).shy <= enemyZeus.getEnemySpaceshipWidth()
+               && ourShots.get(i).shx <= enemyZeus.ex + enemyZeus.getEnemyZeusWidth()
+               && ourShots.get(i).shy <= enemyZeus.getEnemyZeusWidth()
                && ourShots.get(i).shy >= enemyZeus.ey){
                 points++;
                 ourShots.remove(i);
@@ -192,15 +192,15 @@ public class LightningShooter extends View {
         // This way we restrict ourselves of making just one shot at a time, on the screen.
         if(event.getAction() == MotionEvent.ACTION_UP){
             if(ourShots.size() < 1){
-                Shot ourShot = new Shot(context, ourGladiator.ox + ourGladiator.getOurSpaceshipWidth() / 2, ourGladiator.oy);
+                Shot ourShot = new Shot(context, ourGladiator.ox + ourGladiator.getOurGladiatorWidth() / 2, ourGladiator.oy);
                 ourShots.add(ourShot);
             }
         }
-        // When event.getAction() is MotionEvent.ACTION_DOWN, control ourSpaceship
+        // When event.getAction() is MotionEvent.ACTION_DOWN, control ourGladiator
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             ourGladiator.ox = touchX;
         }
-        // When event.getAction() is MotionEvent.ACTION_MOVE, control ourSpaceship
+        // When event.getAction() is MotionEvent.ACTION_MOVE, control ourGladiator
         // along with the touch.
         if(event.getAction() == MotionEvent.ACTION_MOVE){
             ourGladiator.ox = touchX;
