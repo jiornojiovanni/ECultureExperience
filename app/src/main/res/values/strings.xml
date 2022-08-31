@@ -38,4 +38,6 @@
     <string name="share_with">Share with</string>
     <string name="i_visited">I visited</string>
     <string name="review">Review:</string>
+    <string name="profile">Profile</string>
+    <string name="quiz" translatable="false">Quiz</string>
 </resources>
