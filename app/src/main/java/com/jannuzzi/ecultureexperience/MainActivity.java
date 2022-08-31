@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,7 +30,10 @@ import com.google.firebase.storage.StorageReference;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
+import com.jannuzzi.ecultureexperience.ui.route.RouteActivity;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -120,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         String description = "";
         String tag = "";
         String imagePath = "";
+        String path = "";
 
         reader.beginObject();
         while(reader.hasNext()) {
@@ -132,14 +138,15 @@ public class MainActivity extends AppCompatActivity {
                 tag = reader.nextString();
             } else if ("imagePath".equals(token)) {
                 imagePath = reader.nextString();
+            } else if ("path".equals(token)) {
+                path = reader.nextString();
             }
             else {
                 reader.skipValue();
             }
         }
         reader.endObject();
-
-        return new Path(name, description, tag, imagePath);
+        return new Path(name, description, tag, imagePath, path);
     }
 
     private void parsePathJson(Intent data) throws IOException {
@@ -172,6 +179,16 @@ public class MainActivity extends AppCompatActivity {
                 data.putString("description", path.getDescription());
 
                 Intent intent = new Intent(this, RateActivity.class);
+                intent.putExtras(data);
+
+                startActivity(intent);
+            });
+
+            layoutCard.findViewById(R.id.card).setOnClickListener(view -> {
+                Bundle data = new Bundle();
+                data.putString("pathFile", path.getPath());
+
+                Intent intent = new Intent(this, RouteActivity.class);
                 intent.putExtras(data);
 
                 startActivity(intent);
