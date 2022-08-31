@@ -4,13 +4,15 @@ public class Path {
     private String name;
     private String description;
     private String tag;
-    private final String imagePath;
+    private String imagePath;
+    private String path;
 
-    public Path(String name, String description, String tag, String imagePath) {
+    public Path(String name, String description, String tag, String imagePath, String path) {
         this.name = name;
         this.description = description;
         this.tag = tag;
         this.imagePath = imagePath;
+        this.path = path;
     }
 
     @Override
@@ -20,6 +22,7 @@ public class Path {
                 ", description='" + description + '\'' +
                 ", tag='" + tag + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", path='" + path + '\'' +
                 '}';
     }
 
@@ -50,4 +53,10 @@ public class Path {
     public String getImagePath() {
         return imagePath;
     }
+
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
+    public String getPath() { return path; }
+
+    public void setPath(String path) { this.path = path; }
 }
