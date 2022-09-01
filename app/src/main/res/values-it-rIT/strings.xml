@@ -31,4 +31,6 @@
     <string name="i_visited">Ho visitato</string>
     <string name="review">Recensione:</string>
     <string name="route_error">Non è stato possibile trovare il file con il percorso.</string>
+    <string name="profile">Profilo</string>
+    <string name="route">Percorso</string>
 </resources>

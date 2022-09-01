@@ -3,11 +3,13 @@ package com.jannuzzi.ecultureexperience.ui.route;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.JsonReader;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.card.MaterialCardView;
 import com.jannuzzi.ecultureexperience.R;
@@ -28,6 +30,19 @@ public class RouteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.route);
+        setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         String pathFile = getIntent().getExtras().getString("pathFile");
         InputStream fileContent = readPathFile(pathFile);
