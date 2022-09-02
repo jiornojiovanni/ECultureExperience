@@ -33,4 +33,6 @@
     <string name="route_error">Non è stato possibile trovare il file con il percorso.</string>
     <string name="profile">Profilo</string>
     <string name="route">Percorso</string>
+    <string name="play">Gioca</string>
+    <string name="points">Punteggio:</string>
 </resources>
