@@ -44,4 +44,5 @@
     <string name="quiz" translatable="false">Quiz</string>
     <string name="play">Play</string>
     <string name="points">Points:</string>
+    <string name="file_already_loaded">You already loaded this file!</string>
 </resources>
