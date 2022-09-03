@@ -35,4 +35,5 @@
     <string name="route">Percorso</string>
     <string name="play">Gioca</string>
     <string name="points">Punteggio:</string>
+    <string name="file_already_loaded">Hai già caricato questo file!</string>
 </resources>

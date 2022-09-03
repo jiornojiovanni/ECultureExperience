@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int READ_PERMISSION = 208;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private List<Path> pathList = new ArrayList<>();
+    private List<String> idList = new ArrayList<>();
     private StorageReference storageRef;
 
     @Override
@@ -149,18 +149,35 @@ public class MainActivity extends AppCompatActivity {
         return new Path(name, description, tag, imagePath, path);
     }
 
-    private void parsePathJson(Intent data) throws IOException {
+    private List<Path> parsePathJson(Intent data) throws IOException {
+        List<Path> pathList = new ArrayList<>();
         InputStream stream = getContentResolver().openInputStream(data.getData());
         JsonReader reader = new JsonReader(new InputStreamReader(stream));
-
+        reader.beginObject();
+        if("id".equals(reader.nextName())) {
+            String id = reader.nextString();
+            if(id.equals("")) {
+                throw new IOException();
+            }
+            for (String idPath:
+                 idList) {
+                if(idPath.equals(id)) {
+                    return null;
+                }
+            }
+            idList.add(id);
+        }
+        reader.nextName();
         reader.beginArray();
         while(reader.hasNext()) {
             pathList.add(readPath(reader));
         }
         reader.endArray();
+        reader.endObject();
+        return pathList;
     }
 
-    private void displayPaths() throws InterruptedException, IOException {
+    private void displayPaths(List<Path> pathList) throws InterruptedException, IOException {
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
 
@@ -209,8 +226,12 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) return;
         if (requestCode == JSON_CONFIG) {
             try {
-                parsePathJson(data);
-                displayPaths();
+                List<Path> pathList = parsePathJson(data);
+                if(pathList != null) {
+                    displayPaths(pathList);
+                } else {
+                    Toast.makeText(this, R.string.file_already_loaded, Toast.LENGTH_LONG).show();
+                }
             } catch (IOException | InterruptedException e) {
                 Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
             }
