@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
             layoutCard.findViewById(R.id.card).setOnClickListener(view -> {
                 Bundle data = new Bundle();
                 data.putString("pathFile", path.getPath());
-
                 Intent intent = new Intent(this, RouteActivity.class);
                 intent.putExtras(data);
 

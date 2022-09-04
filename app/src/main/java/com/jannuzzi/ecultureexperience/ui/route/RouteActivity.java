@@ -1,5 +1,6 @@
 package com.jannuzzi.ecultureexperience.ui.route;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.JsonReader;
@@ -17,15 +18,19 @@ import com.jannuzzi.ecultureexperience.data.model.Route;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RouteActivity extends AppCompatActivity {
 
-
+    private List<Route> instructions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +48,25 @@ public class RouteActivity extends AppCompatActivity {
         });
 
         String pathFile = getIntent().getExtras().getString("pathFile");
-        InputStream fileContent = readPathFile(pathFile);
-        if(fileContent != null) {
-            List<Route> instructions = parsePathFile(fileContent);
-            displayInstructions(instructions);
+
+        instructions = restoreState(pathFile);
+        if(instructions == null) {
+            InputStream fileContent = readPathFile(pathFile);
+            instructions = parsePathFile(fileContent);
+            if(fileContent != null) {
+                displayInstructions(instructions);
+            } else {
+                Toast.makeText(this, R.string.route_error, Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(this, R.string.route_error, Toast.LENGTH_LONG).show();
+            displayInstructions(instructions);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveState(instructions);
     }
 
     private void displayInstructions(List<Route> instructions) {
@@ -58,9 +75,14 @@ public class RouteActivity extends AppCompatActivity {
                 instructions) {
             LinearLayout row = (LinearLayout) getLayoutInflater().inflate(R.layout.row_path, null);
             MaterialCardView view = row.findViewById(R.id.card_event);
+            if(route.getChecked()) {
+                view.setChecked(true);
+            }
             view.setOnClickListener(clicked -> {
                 MaterialCardView card = (MaterialCardView) clicked;
                 card.setChecked(!card.isChecked());
+                route.flip();
+                saveState(instructions);
             });
             ((TextView) view.findViewById(R.id.title)).setText(route.getTitle());
             ((TextView) view.findViewById(R.id.description)).setText(route.getDescription());
@@ -110,6 +132,32 @@ public class RouteActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             return instructions;
+        }
+    }
+
+    private void saveState(List<Route> instructions) {
+        try {
+            FileOutputStream stream = getApplicationContext().openFileOutput(getIntent().getExtras().getString("pathFile"), Context.MODE_PRIVATE);
+            ObjectOutputStream out = new ObjectOutputStream(stream);
+            out.writeObject(instructions);
+            out.close();
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Route> restoreState(String pathFile) {
+        try {
+            FileInputStream stream = getApplicationContext().openFileInput(pathFile);
+            ObjectInputStream in = new ObjectInputStream(stream);
+            List<Route> list = (List<Route>) in.readObject();
+            in.close();
+            stream.close();
+            return list;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

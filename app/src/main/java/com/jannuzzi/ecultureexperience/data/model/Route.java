@@ -1,12 +1,16 @@
 package com.jannuzzi.ecultureexperience.data.model;
 
-public class Route {
+import java.io.Serializable;
+
+public class Route implements Serializable {
     String title;
     String description;
+    Boolean checked;
 
     public Route(String title, String description) {
         this.title = title;
         this.description = description;
+        checked = false;
     }
 
     public String getTitle() {
@@ -25,11 +29,16 @@ public class Route {
         this.description = description;
     }
 
+    public void flip() { checked = !checked; }
+
+    public Boolean getChecked() { return checked; }
+
     @Override
     public String toString() {
-        return "PathInstruction{" +
+        return "Route{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", checked=" + checked +
                 '}';
     }
 }
