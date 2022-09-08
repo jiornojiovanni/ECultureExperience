@@ -1,5 +1,12 @@
 package com.jannuzzi.ecultureexperience.data;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.jannuzzi.ecultureexperience.MainActivity;
 import com.jannuzzi.ecultureexperience.data.model.LoggedInUser;
 
 /**
@@ -9,7 +16,6 @@ import com.jannuzzi.ecultureexperience.data.model.LoggedInUser;
 public class LoginRepository {
 
     private static volatile LoginRepository instance;
-
     private LoginDataSource dataSource;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
@@ -28,6 +34,7 @@ public class LoginRepository {
         return instance;
     }
 
+
     public boolean isLoggedIn() {
         return user != null;
     }
@@ -44,6 +51,8 @@ public class LoginRepository {
     }
 
     public Result<LoggedInUser> login(String username, String password) {
+
+
         // handle login
         Result<LoggedInUser> result = dataSource.login(username, password);
         if (result instanceof Result.Success) {

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.jannuzzi.ecultureexperience.MainActivity;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.databinding.ActivityLoginBinding;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+            setContentView(binding.getRoot());
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
+                    return;
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
@@ -131,9 +133,17 @@ public class LoginActivity extends AppCompatActivity {
                 goToRegister();
             }
         });
-
     }
 
+    public void onStart(){
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            //Complete and destroy login activity once successful
+            finish();
+            goToMain();
+        }
+
+    }
     private void goToMain() {
         Intent intent =new Intent(this, MainActivity.class);
         startActivity(intent);
