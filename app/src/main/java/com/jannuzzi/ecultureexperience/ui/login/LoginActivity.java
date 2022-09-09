@@ -14,15 +14,30 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jannuzzi.ecultureexperience.MainActivity;
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.data.LoginDataSource;
+import com.jannuzzi.ecultureexperience.data.LoginRepository;
+import com.jannuzzi.ecultureexperience.data.Result;
+import com.jannuzzi.ecultureexperience.data.User;
+import com.jannuzzi.ecultureexperience.data.model.LoggedInUser;
 import com.jannuzzi.ecultureexperience.databinding.ActivityLoginBinding;
 import com.jannuzzi.ecultureexperience.ui.register.RegisterActivity;
 
@@ -110,8 +125,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                    login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                    //loginViewModel.login(emailEditText.getText().toString(),
+                            //passwordEditText.getText().toString());
                 }
                 return false;
             }
@@ -121,8 +137,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                //loginViewModel.login(emailEditText.getText().toString(),
+                  //      passwordEditText.getText().toString());
             }
         });
 
@@ -162,5 +179,56 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void login(String username, String password){
+        FirebaseAuth mAuth;
+        DatabaseReference reference;
+        //FirebaseUser user;
+        //String userID;
+        LoggedInUser realUser;
+        String errorMessage="";
+        Exception dbError;
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    DatabaseReference reference = FirebaseDatabase.getInstance("https://e-cultureexperience-6a9da-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+                    String userID = user.getUid();
+
+                    reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            User userProfile = snapshot.getValue(User.class);
+                            if(userProfile!= null){
+                                LoggedInUser realUser =
+                                        new LoggedInUser(userID, userProfile.name, userProfile.age, userProfile.lastName, userProfile.email);
+                                LoginRepository.getInstance(new LoginDataSource()).login( new Result.Success<>(realUser));
+                                finish();
+                                goToMain();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            //errorMessage = "Problem contacting the database ";
+                            //dbError = error.toException();
+
+                        }
+                    });
+                }
+                else {
+                    if((task.getException() == null ) ? false : true ) {
+                        //errorMessage = "Problem contacting the database ";
+                        //dbError = task.getException();
+                    }
+                }
+            }
+        });
+
     }
 }

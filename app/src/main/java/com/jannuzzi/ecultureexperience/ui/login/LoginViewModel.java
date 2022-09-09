@@ -29,6 +29,7 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
+    /*
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
@@ -40,6 +41,7 @@ public class LoginViewModel extends ViewModel {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }
+    */
 
     public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {

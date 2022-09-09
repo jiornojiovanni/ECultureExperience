@@ -48,6 +48,7 @@ public class LoginDataSource {
                                 if(userProfile!= null){
                                     realUser =
                                             new LoggedInUser( userID, userProfile.name, userProfile.age, userProfile.lastName, userProfile.email);
+
                                 }
 
                             }
