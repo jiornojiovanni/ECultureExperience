@@ -21,6 +21,8 @@
     <string name="login">Accedi</string>
     <string name="signup">Registrazione</string>
     <string name="no_account">Non hai un account?</string>
+    <string name="completed_routes">Percorsi completati</string>
+    <string name="completed_games">Giochi completati</string>
     <string name="loading">Caricamento...</string>
     <string name="load_json">Carica il percorso json</string>
     <string name="rate">Valuta</string>
@@ -30,4 +32,16 @@
     <string name="Database_connection_error">Impossibile stabilire la connessione, riprova più tardi</string>
 
 
+    <string name="succesful_permission">Permessi ricevuti, puoi caricare il file adesso.</string>
+    <string name="refused_permission">Permessi rifiutati, non puoi procedere con il caricamento del file.</string>
+    <string name="error_loading">Non è possibile caricare il file. Formato non valido.</string>
+    <string name="share_with">Condividi con</string>
+    <string name="i_visited">Ho visitato</string>
+    <string name="review">Recensione:</string>
+    <string name="route_error">Non è stato possibile trovare il file con il percorso.</string>
+    <string name="profile">Profilo</string>
+    <string name="route">Percorso</string>
+    <string name="play">Gioca</string>
+    <string name="points">Punteggio:</string>
+    <string name="file_already_loaded">Hai già caricato questo file!</string>
 </resources>

@@ -1,0 +1,26 @@
+{
+    "id": "",
+    "paths": [
+        {
+            "name": "Pantheon",
+            "description": "blablbalba",
+            "tag": "monumento, antico",
+            "imagePath": "circo.jpg",
+            "path": "Pantheon-SanPietro.txt"
+        },
+        {
+            "name": "Colosseo",
+            "description": "Descrizione del colosseo etc. etc.",
+            "tag": "monumento, antico",
+            "imagePath": "colosseo.jpg",
+            "path": ""
+        },
+        {
+            "name": "Circo massimo",
+            "description": "Descrizione del circo massimo etc. etc.",
+            "tag": "monumento, circo, antico",
+            "imagePath": "circo.jpg",
+            "path": ""
+        }
+    ]
+}

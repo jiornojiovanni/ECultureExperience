@@ -1,0 +1,12 @@
+{
+    "id": "Firenze",
+    "paths": [
+        {
+            "name": "Torre di pisa",
+            "description": "blablbalba",
+            "tag": "monumento, antico",
+            "imagePath": "circo.jpg",
+            "path": ""
+        }
+    ]
+}

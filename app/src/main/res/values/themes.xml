@@ -19,9 +19,13 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="smallRatingBar" parent="android:style/Widget.Material.RatingBar.Small"/>
-
-
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
     <style name="Theme.ECultureExperience.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+    <style name="route_event" parent="Widget.Material3.CardView.Outlined"/>
     <style name="Theme.ECultureExperience.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

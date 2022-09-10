@@ -29,10 +29,25 @@
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
     <string name="no_account">You have\'t an account?</string>
+    <string name="completed_routes">Completed routes</string>
+    <string name="completed_games">Completed games</string>
     <string name="loading">Loading...</string>
     <string name="load_json">Load your path json</string>
     <string name="rate">Rate</string>
     <string name="rate_shared">Thanks for your feedback!</string>
+    <string name="succesful_permission">Permission received, now you can load the file</string>
+    <string name="refused_permission">Permission refused, can\'t proceed with file loading.</string>
+    <string name="error_loading">Can\'t load the file. Format not valid.</string>
+    <string name="share_with">Share with</string>
+    <string name="i_visited">I visited</string>
+    <string name="review">Review:</string>
+    <string name="route_error">Couldn\'t find route file.</string>
+    <string name="profile">Profile</string>
+    <string name="route">Route</string>
+    <string name="quiz" translatable="false">Quiz</string>
+    <string name="play">Play</string>
+    <string name="points">Points:</string>
+    <string name="file_already_loaded">You already loaded this file!</string>
     <string name="fill_fields">Fill all the fields before submitting.</string>
     <string name="generic_login_error">Unknown execution error</string>
     <string name="Database_connection_error">Impossible to estabilish connection to the database, retry later</string>

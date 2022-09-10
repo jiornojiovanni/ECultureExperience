@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_event"
+        android:layout_width="377dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"
+        card_view:cardBackgroundColor="#FFF8E1"
+        card_view:cardCornerRadius="20dp">
+
+
+        <LinearLayout
+            android:layout_width="284dp"
+            android:layout_height="61dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginVertical="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@+id/checkBox2"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                style="?attr/materialCardViewOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="@color/brown_700"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:text="Description"
+                    android:textColor="@color/light_gray"
+                    tools:layout_editor_absoluteX="-36dp"
+                    tools:layout_editor_absoluteY="272dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
