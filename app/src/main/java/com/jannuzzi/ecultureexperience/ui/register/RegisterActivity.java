@@ -4,6 +4,7 @@ package com.jannuzzi.ecultureexperience.ui.register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,8 +93,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             goToLogin();
         }
         else if(v.getId()==R.id.register){
-            if (editEmail.getText().toString().equals("")
-                    || editName.getText().toString().equals("")
+            if(editPassword.getText().toString().length()<8){
+                Toast.makeText(this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
+            }
+            else if (!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
+                Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
+            }
+            else if (editName.getText().toString().equals("")
                     || editLastName.getText().toString().equals("")
                     || editAge.getText().toString().equals("")
                     || editPassword.getText().toString().equals("")) {
@@ -128,8 +134,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if(task1.isSuccessful()){
                             User user = new User(name, lastName, age, email);
                               DatabaseReference fb=FirebaseDatabase.getInstance("https://e-cultureexperience-6a9da-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
-                                    Log.w("istanza", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    //temp2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     fb.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

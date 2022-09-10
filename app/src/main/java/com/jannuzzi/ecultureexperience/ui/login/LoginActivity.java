@@ -25,6 +25,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+    final ProgressBar loadingProgressBar = binding.loading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final TextView signup = binding.actionSignIn;
-        final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -125,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    loadingProgressBar.setVisibility(View.VISIBLE);
                     login(emailEditText.getText().toString(), passwordEditText.getText().toString());
                     //loginViewModel.login(emailEditText.getText().toString(),
                             //passwordEditText.getText().toString());
@@ -139,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 login(emailEditText.getText().toString(), passwordEditText.getText().toString());
                 //loginViewModel.login(emailEditText.getText().toString(),
-                  //      passwordEditText.getText().toString());
+                //      passwordEditText.getText().toString());
             }
         });
 
@@ -184,13 +189,12 @@ public class LoginActivity extends AppCompatActivity {
     private void login(String username, String password){
         FirebaseAuth mAuth;
         DatabaseReference reference;
-        //FirebaseUser user;
-        //String userID;
         LoggedInUser realUser;
         String errorMessage="";
         Exception dbError;
 
         mAuth = FirebaseAuth.getInstance();
+
         mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -215,6 +219,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
+                            loadingProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, R.string.Database_connection_error, Toast.LENGTH_LONG).show();
                             //errorMessage = "Problem contacting the database ";
                             //dbError = error.toException();
 
@@ -222,9 +228,16 @@ public class LoginActivity extends AppCompatActivity {
                     });
                 }
                 else {
-                    if((task.getException() == null ) ? false : true ) {
-                        //errorMessage = "Problem contacting the database ";
-                        //dbError = task.getException();
+                    loadingProgressBar.setVisibility(View.GONE);
+                    try {
+                        throw task.getException();
+                    } catch(FirebaseAuthInvalidUserException e) {
+                        Toast.makeText(LoginActivity.this, R.string.invalid_credentials, Toast.LENGTH_LONG).show();
+                    } catch(FirebaseAuthInvalidCredentialsException e) {
+                        Toast.makeText(LoginActivity.this, R.string.invalid_login_password, Toast.LENGTH_LONG).show();
+                    } catch(Exception e) {
+                        Toast.makeText(LoginActivity.this, R.string.generic_login_error, Toast.LENGTH_LONG).show();
+
                     }
                 }
             }
