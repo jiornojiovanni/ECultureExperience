@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
@@ -27,13 +26,14 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jannuzzi.ecultureexperience.data.LoginDataSource;
+import com.jannuzzi.ecultureexperience.data.LoginRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
+import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 import com.jannuzzi.ecultureexperience.ui.route.RouteActivity;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private List<String> idList = new ArrayList<>();
     private StorageReference storageRef;
-
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -104,6 +104,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
             }
         }
+
+
+        try {
+            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+                logout();
+                finish();
+                goToLogin();
+                return true;
+            });
+        }
+        catch(Exception e){
+            Log.w("NAVBAR", e);
+        }
+
     }
 
     @Override
@@ -236,5 +250,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    void logout(){
+        LoginRepository.getInstance(new LoginDataSource()).logout();
+    }
+
+    private void goToLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
 
 }

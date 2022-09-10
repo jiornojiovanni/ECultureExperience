@@ -52,8 +52,8 @@ public class RouteActivity extends AppCompatActivity {
         instructions = restoreState(pathFile);
         if(instructions == null) {
             InputStream fileContent = readPathFile(pathFile);
-            instructions = parsePathFile(fileContent);
             if(fileContent != null) {
+                instructions = parsePathFile(fileContent);
                 displayInstructions(instructions);
             } else {
                 Toast.makeText(this, R.string.route_error, Toast.LENGTH_LONG).show();

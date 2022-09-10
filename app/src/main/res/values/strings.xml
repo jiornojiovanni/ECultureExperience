@@ -18,7 +18,10 @@
     <string name="welcome">Welcome</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >8 characters</string>
+    <string name="invalid_email">Please, provide a valid email</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="invalid_login_password">Invalid password</string>
+    <string name="invalid_credentials">Incorrect credentials inserted</string>
     <string name="name">Name</string>
     <string name="lastname">Lastname</string>
     <string name="age">Age</string>
@@ -45,4 +48,10 @@
     <string name="play">Play</string>
     <string name="points">Points:</string>
     <string name="file_already_loaded">You already loaded this file!</string>
+    <string name="fill_fields">Fill all the fields before submitting.</string>
+    <string name="generic_login_error">Unknown execution error</string>
+    <string name="Database_connection_error">Impossible to estabilish connection to the database, retry later</string>
+
+
+
 </resources>

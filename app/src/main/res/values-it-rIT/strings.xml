@@ -8,7 +8,10 @@
     <string name="action_sign_in">Accedi</string>
     <string name="invalid_username">Username non valido</string>
     <string name="invalid_password">La password deve essere maggiore di 8 caratteri</string>
+    <string name="invalid_email">Utilizzare un email valida </string>
     <string name="login_failed">Login fallito</string>
+    <string name="invalid_login_password">Password errata</string>
+    <string name="invalid_credentials">Credenziali errate</string>
     <string name="welcome">Benvenuto</string>
     <string name="action_register">Registrati</string>
     <string name="name">Nome</string>
@@ -24,6 +27,11 @@
     <string name="load_json">Carica il percorso json</string>
     <string name="rate">Valuta</string>
     <string name="rate_shared">Grazie del tuo feedback!</string>
+    <string name="fill_fields">Riempi tutti i campi prima di procedere.</string>
+    <string name="generic_login_error">Errore di esecuzione</string>
+    <string name="Database_connection_error">Impossibile stabilire la connessione, riprova più tardi</string>
+
+
     <string name="succesful_permission">Permessi ricevuti, puoi caricare il file adesso.</string>
     <string name="refused_permission">Permessi rifiutati, non puoi procedere con il caricamento del file.</string>
     <string name="error_loading">Non è possibile caricare il file. Formato non valido.</string>
