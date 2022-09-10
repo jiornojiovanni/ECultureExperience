@@ -30,4 +30,5 @@
     <string name="load_json">Load your path json</string>
     <string name="rate">Rate</string>
     <string name="rate_shared">Thanks for your feedback!</string>
+    <string name="fill_fields">Fill all the fields before submitting.</string>
 </resources>

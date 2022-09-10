@@ -4,21 +4,15 @@ package com.jannuzzi.ecultureexperience.ui.register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.data.User;
-import com.jannuzzi.ecultureexperience.databinding.ActivityRegisterBinding;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
 
 
@@ -99,7 +92,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             goToLogin();
         }
         else if(v.getId()==R.id.register){
-            registerUser();
+            if (editEmail.getText().toString().equals("")
+                    || editName.getText().toString().equals("")
+                    || editLastName.getText().toString().equals("")
+                    || editAge.getText().toString().equals("")
+                    || editPassword.getText().toString().equals("")) {
+                Toast.makeText(this, R.string.fill_fields, Toast.LENGTH_SHORT).show();
+            } else {
+                registerUser();
+            }
         }
     }
 
