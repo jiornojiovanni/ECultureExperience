@@ -2,7 +2,7 @@ package com.jannuzzi.ecultureexperience.data;
 
 public class User {
     public String name, lastName, age, email;
-
+    public int completedRoutes, completedGames;
     public User(){
 
     }
@@ -12,5 +12,7 @@ public class User {
         this.lastName = lastName;
         this.age = age;
         this.email = email;
+        completedRoutes = 0;
+        completedGames = 0;
     }
 }
