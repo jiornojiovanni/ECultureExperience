@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:includeFontPadding="false"
-                        android:text="34"
+                        android:text="0"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:includeFontPadding="false"
-                        android:text="34"
+                        android:text="0"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 

@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task1) {
                         if(task1.isSuccessful()){
                             User user = new User(name, lastName, age, email);
-                              DatabaseReference fb=FirebaseDatabase.getInstance("https://e-cultureexperience-6a9da-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+                              DatabaseReference fb=FirebaseDatabase.getInstance().getReference("Users");
                                     fb.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

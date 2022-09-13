@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.data.model.Route;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,6 +85,10 @@ public class RouteActivity extends AppCompatActivity {
                 card.setChecked(!card.isChecked());
                 route.flip();
                 saveState(instructions);
+                //the user has completed the route;
+                if(checkIfCompleted(instructions)) {
+                    updateBadgeCount();
+                }
             });
             ((TextView) view.findViewById(R.id.title)).setText(route.getTitle());
             ((TextView) view.findViewById(R.id.description)).setText(route.getDescription());
@@ -159,5 +165,28 @@ public class RouteActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void updateBadgeCount() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                Long oldValue = (Long) task.getResult().getValue();
+                if(oldValue != null) {
+                    reference.child(uid).child("completedRoutes").setValue(++oldValue);
+                }
+            }
+        });
+    }
+
+    private boolean checkIfCompleted(List<Route> instructions) {
+        for (Route instruction:
+             instructions) {
+            if (!instruction.getChecked()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

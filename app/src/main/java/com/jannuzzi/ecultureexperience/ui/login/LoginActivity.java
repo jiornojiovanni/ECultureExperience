@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    DatabaseReference reference = FirebaseDatabase.getInstance("https://e-cultureexperience-6a9da-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                     String userID = user.getUid();
 
                     reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
