@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> idList = new ArrayList<>();
     private StorageReference storageRef;
     private NavigationView navigationView;
+    private MenuItem searchBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(view -> {
             if( checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 pickFile();
-                //findViewById(R.id.action_search).setVisibility(View.VISIBLE);
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        searchBar = menu.findItem(R.id.action_search);
         return true;
     }
 
@@ -233,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             mainLayout.addView(layoutCard);
+            searchBar.setVisible(true);
         }
     }
 
