@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, R.string.file_already_loaded, Toast.LENGTH_LONG).show();
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException | InterruptedException | IllegalStateException e) {
                 Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
             }
         }
