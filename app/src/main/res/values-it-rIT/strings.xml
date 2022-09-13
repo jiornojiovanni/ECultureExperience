@@ -44,4 +44,5 @@
     <string name="play">Gioca</string>
     <string name="points">Punteggio:</string>
     <string name="file_already_loaded">Hai già caricato questo file!</string>
+    <string name="scan_qr">Scansione QR</string>
 </resources>

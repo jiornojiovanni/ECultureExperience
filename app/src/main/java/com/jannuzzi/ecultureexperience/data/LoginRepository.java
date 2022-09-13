@@ -33,7 +33,9 @@ public class LoginRepository {
         }
         return instance;
     }
-
+    public LoggedInUser getLoggedInUser(){
+        return user;
+    }
 
     public boolean isLoggedIn() {
         return user != null;
