@@ -3,6 +3,8 @@ package com.jannuzzi.ecultureexperience.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -27,13 +29,18 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        temp = LoginRepository.getInstance(new LoginDataSource()).getLoggedInUser();
+        //temp = LoginRepository.getInstance(new LoginDataSource()).getLoggedInUser();
+        SharedPreferences sp1= getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+        String name=sp1.getString("name", "");
+        String lastName= sp1.getString("lastName", "");
+        String em= sp1.getString("email", "");
+
         TextView nome = findViewById(R.id.profile_name);
-        nome.setText(temp.getDisplayName());
+        nome.setText(name);
         TextView cognome = findViewById(R.id.profile_lastname);
-        cognome.setText(temp.getLastName());
+        cognome.setText(lastName);
         TextView email = findViewById(R.id.profile_email);
-        email.setText(temp.getEmail());
+        email.setText(em);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -62,5 +69,6 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 }

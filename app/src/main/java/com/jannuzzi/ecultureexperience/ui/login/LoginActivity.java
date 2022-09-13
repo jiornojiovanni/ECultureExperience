@@ -1,7 +1,9 @@
 package com.jannuzzi.ecultureexperience.ui.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -208,9 +210,22 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             User userProfile = snapshot.getValue(User.class);
                             if(userProfile!= null){
+                                SharedPreferences sharedPreferences = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+                                // Creating an Editor object to edit(write to the file)
+                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                // Storing the key and its value as the data fetched from edittext
+                                myEdit.putString("name", userProfile.name);
+                                myEdit.putString("lastName", userProfile.lastName);
+                                myEdit.putString("email", userProfile.email);
+                                myEdit.commit();
+
+
+
                                 LoggedInUser realUser =
+
                                         new LoggedInUser(userID, userProfile.name, userProfile.age, userProfile.lastName, userProfile.email);
                                 LoginRepository.getInstance(new LoginDataSource()).login( new Result.Success<>(realUser));
+
                                 finish();
                                 goToMain();
                             }

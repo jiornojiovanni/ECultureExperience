@@ -1,7 +1,9 @@
 package com.jannuzzi.ecultureexperience;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -258,6 +260,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     void logout(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.clear();
+        myEdit.commit();
         LoginRepository.getInstance(new LoginDataSource()).logout();
     }
 
