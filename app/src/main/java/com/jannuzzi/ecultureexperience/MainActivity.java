@@ -78,7 +78,20 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        try {
+            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+                logout();
+                finish();
+                goToLogin();
+                return true;
+            });
+        }
+        catch(Exception e){
+            Log.w("NAVBAR", e);
+        }
+
         storageRef = FirebaseStorage.getInstance().getReference();
+
     }
 
     private void pickFile() {
@@ -103,19 +116,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
             }
-        }
-
-
-        try {
-            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
-                logout();
-                finish();
-                goToLogin();
-                return true;
-            });
-        }
-        catch(Exception e){
-            Log.w("NAVBAR", e);
         }
 
     }
