@@ -29,7 +29,6 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {

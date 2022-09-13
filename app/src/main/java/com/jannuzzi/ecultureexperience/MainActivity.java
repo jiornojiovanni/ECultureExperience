@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(view -> {
             if( checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 pickFile();
+                //findViewById(R.id.action_search).setVisibility(View.VISIBLE);
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -71,14 +73,27 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_settings, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_logout, R.id.nav_qr, R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        try {
+            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+                logout();
+                finish();
+                goToLogin();
+                return true;
+            });
+        }
+        catch(Exception e){
+            Log.w("NAVBAR", e);
+        }
+
         storageRef = FirebaseStorage.getInstance().getReference();
+
     }
 
     private void pickFile() {
@@ -103,19 +118,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.refused_permission, Toast.LENGTH_SHORT).show();
             }
-        }
-
-
-        try {
-            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
-                logout();
-                finish();
-                goToLogin();
-                return true;
-            });
-        }
-        catch(Exception e){
-            Log.w("NAVBAR", e);
         }
 
     }
