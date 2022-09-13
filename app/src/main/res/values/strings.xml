@@ -53,6 +53,7 @@
     <string name="Database_connection_error">Impossible to estabilish connection to the database, retry later</string>
     <string name="scan_qr">Scan QR</string>
     <string name="action_search">Search</string>
+    <string name="completed_route">You completed the route!</string>
 
 
 </resources>

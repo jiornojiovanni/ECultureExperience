@@ -45,4 +45,6 @@
     <string name="points">Punteggio:</string>
     <string name="file_already_loaded">Hai già caricato questo file!</string>
     <string name="scan_qr">Scansione QR</string>
+    <string name="completed_route">Hai completato il percorso!</string>
+    <string name="action_search">Cerca</string>
 </resources>

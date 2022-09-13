@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class RouteActivity extends AppCompatActivity {
                 //the user has completed the route;
                 if(checkIfCompleted(instructions)) {
                     updateBadgeCount();
+                    Toast.makeText(getApplicationContext(), R.string.completed_route, Toast.LENGTH_LONG).show();
                 }
             });
             ((TextView) view.findViewById(R.id.title)).setText(route.getTitle());
@@ -168,16 +170,20 @@ public class RouteActivity extends AppCompatActivity {
     }
 
     private void updateBadgeCount() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                Long oldValue = (Long) task.getResult().getValue();
-                if(oldValue != null) {
-                    reference.child(uid).child("completedRoutes").setValue(++oldValue);
+        try {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    Long oldValue = (Long) task.getResult().getValue();
+                    if(oldValue != null) {
+                        reference.child(uid).child("completedRoutes").setValue(++oldValue);
+                    }
                 }
-            }
-        });
+            });
+        } catch (NullPointerException e) {
+            Log.e("profile", "not logged, can't update");
+        }
     }
 
     private boolean checkIfCompleted(List<Route> instructions) {
