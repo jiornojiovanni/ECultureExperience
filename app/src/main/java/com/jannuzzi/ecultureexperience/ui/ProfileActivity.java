@@ -11,9 +11,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.data.LoginDataSource;
+import com.jannuzzi.ecultureexperience.data.LoginRepository;
+import com.jannuzzi.ecultureexperience.data.model.LoggedInUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private LoggedInUser temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,15 @@ public class ProfileActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.profile);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        temp = LoginRepository.getInstance(new LoginDataSource()).getLoggedInUser();
+        TextView nome = findViewById(R.id.profile_name);
+        nome.setText(temp.getDisplayName());
+        TextView cognome = findViewById(R.id.profile_lastname);
+        cognome.setText(temp.getLastName());
+        TextView email = findViewById(R.id.profile_email);
+        email.setText(temp.getEmail());
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

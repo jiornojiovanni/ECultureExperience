@@ -36,7 +36,7 @@ public class LoggedInUser {
         return lastName;
     }
 
-    public String email() {
+    public String getEmail() {
         return email;
     }
 }
