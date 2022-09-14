@@ -71,7 +71,7 @@
                 android:layout_height="65dp"
                 android:layout_gravity="start"
                 android:layout_marginBottom="16dp"
-                android:enabled="false"
+                android:enabled="true"
                 android:text="@string/action_sign_in"
                 android:textSize="16sp"
                 app:backgroundTint="@color/brown_200"
