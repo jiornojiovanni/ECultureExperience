@@ -12,7 +12,6 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +29,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.jannuzzi.ecultureexperience.data.LoginDataSource;
-import com.jannuzzi.ecultureexperience.data.LoginRepository;
+import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
@@ -260,12 +258,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     void logout(){
-
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.clear();
-        myEdit.commit();
-        LoginRepository.getInstance(new LoginDataSource()).logout();
+        UserRepository.getInstance().logout();
+        for (String file: getApplicationContext().fileList()) {
+            getApplicationContext().deleteFile(file);
+        }
     }
 
     private void goToLogin() {
