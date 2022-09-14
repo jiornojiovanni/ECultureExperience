@@ -5,6 +5,7 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -69,6 +70,13 @@
         <activity android:name=".ui.game.GameOver"
             android:theme="@style/Theme.ECultureExperience.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.qr.QrScanner"
+            android:exported="false"> </activity>
+        <activity android:name=".ui.qr.Capture"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"> </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

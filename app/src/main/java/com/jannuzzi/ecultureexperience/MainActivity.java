@@ -35,6 +35,7 @@ import com.jannuzzi.ecultureexperience.data.LoginRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
+import com.jannuzzi.ecultureexperience.ui.qr.QrScanner;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 import com.jannuzzi.ecultureexperience.ui.route.RouteActivity;
 
@@ -88,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 finish();
                 goToLogin();
+                return true;
+            });
+            navigationView.getMenu().findItem( R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
+                Intent openQr = new Intent(MainActivity.this, QrScanner.class);
+                startActivity(openQr);
                 return true;
             });
         }
