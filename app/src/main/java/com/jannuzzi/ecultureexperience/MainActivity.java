@@ -258,12 +258,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     void logout(){
-
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.clear();
-        myEdit.commit();
         UserRepository.getInstance().logout();
+        for (String file: getApplicationContext().fileList()) {
+            getApplicationContext().deleteFile(file);
+        }
     }
 
     private void goToLogin() {
