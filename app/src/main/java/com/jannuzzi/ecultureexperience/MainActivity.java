@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         try {
+            navigationView.getMenu().findItem( R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
             navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
                 logout();
                 finish();
@@ -218,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
                 data.putString("name", path.getName());
                 data.putString("description", path.getDescription());
+                data.putString("imgPath", path.getImagePath());
 
                 Intent intent = new Intent(this, RateActivity.class);
                 intent.putExtras(data);

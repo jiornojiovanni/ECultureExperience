@@ -2,6 +2,8 @@ package com.jannuzzi.ecultureexperience.ui.rate;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.jannuzzi.ecultureexperience.R;
 
 public class RateActivity extends AppCompatActivity {
@@ -42,9 +47,15 @@ public class RateActivity extends AppCompatActivity {
         cardTitle = findViewById(R.id.cardTitle);
         tvCardSecond = findViewById(R.id.tvCardSecond);
         bar = findViewById(R.id.smallRatingBar);
-
         cardTitle.setText(getIntent().getExtras().getString("name"));
         tvCardSecond.setText(getIntent().getExtras().getString("description"));
+        String imgPath = getIntent().getExtras().getString("imgPath");
+
+        StorageReference imgReference = FirebaseStorage.getInstance().getReference().child(imgPath);
+        imgReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ((ShapeableImageView) findViewById(R.id.ivCard)).setImageBitmap(bmp);
+        });
 
         bar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
            rate.setEnabled(true);
