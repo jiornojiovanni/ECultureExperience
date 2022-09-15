@@ -218,7 +218,8 @@ public class MainActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
                 data.putString("name", path.getName());
                 data.putString("description", path.getDescription());
-
+                data.putString("imgPath", path.getImagePath());
+                
                 Intent intent = new Intent(this, RateActivity.class);
                 intent.putExtras(data);
 
