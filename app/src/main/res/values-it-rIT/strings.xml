@@ -52,4 +52,5 @@
     <string name="email_alreadyused">Registrazione fallita, email già in uso.</string>
     <string name="successfull_register">Registrazione effettuata con successo.</string>
     <string name="failed_register">Registrazione fallita.</string>
+    <string name="question_rating">Quanto ti è piaciuto questo percorso?</string>
 </resources>

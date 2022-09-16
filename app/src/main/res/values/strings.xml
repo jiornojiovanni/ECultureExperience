@@ -59,6 +59,7 @@
     <string name="email_alreadyused">Failed to register user, Email already in use.</string>
     <string name="successfull_register">User has been registered successfully.</string>
     <string name="failed_register">Failed to register user.</string>
+    <string name="question_rating">How much did you like this route?</string>
 
 
 </resources>
