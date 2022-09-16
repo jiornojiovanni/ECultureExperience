@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.ui.quiz.Question;
+import com.jannuzzi.ecultureexperience.ui.quiz.QuizActivity;
+import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 
 public class QrScanner extends AppCompatActivity {
     Button btScan;
@@ -50,19 +53,13 @@ public class QrScanner extends AppCompatActivity {
         );
 
         if (intentResult.getContents() != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    QrScanner.this
-            );
+            Bundle qrData = new Bundle();
+            qrData.putString("Name", intentResult.getContents());
+            Intent intent = new Intent(this, QuizActivity.class);
+            intent.putExtras(qrData);
 
-            builder.setTitle("Result");
-            builder.setMessage(intentResult.getContents());
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
+            startActivity(intent);
+
         } else {
             Toast.makeText(getApplicationContext(), "OOPS... You didn't scan anything", Toast.LENGTH_SHORT).show();
 
