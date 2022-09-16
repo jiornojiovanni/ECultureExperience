@@ -9,9 +9,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.storage.FirebaseStorage;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.data.JSONParser;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
@@ -33,13 +36,7 @@ public class QuizActivity extends AppCompatActivity {
         b_answer3 = findViewById(R.id.answer3);
         b_answer4 = findViewById(R.id.answer4);
 
-        questionItems = JSONParser.parseQuestions(JSONParser.readFile("Download", "questions.json"));
-        if (questionItems == null) {
-            finish();
-        }
-
-        setQuestionsScreen(currentQuestion);
-
+        String questionFile = getIntent().getExtras().getString("Name");
         View.OnClickListener listener = view -> {
 
             Button button = (Button) view;
@@ -55,10 +52,20 @@ public class QuizActivity extends AppCompatActivity {
             }
         };
 
-        b_answer1.setOnClickListener(listener);
-        b_answer2.setOnClickListener(listener);
-        b_answer3.setOnClickListener(listener);
-        b_answer4.setOnClickListener(listener);
+        FirebaseStorage.getInstance().getReference("Questions").child(questionFile).getBytes(Long.MAX_VALUE)
+                .addOnSuccessListener(task -> {
+                    ByteArrayInputStream stream = new ByteArrayInputStream(task);
+
+                    questionItems = JSONParser.parseQuestions(stream);
+                    if (questionItems == null) {
+                        finish();
+                    }
+                    setQuestionsScreen(currentQuestion);
+                    b_answer1.setOnClickListener(listener);
+                    b_answer2.setOnClickListener(listener);
+                    b_answer3.setOnClickListener(listener);
+                    b_answer4.setOnClickListener(listener);
+                });
     }
 
     private void advanceQuiz() {
