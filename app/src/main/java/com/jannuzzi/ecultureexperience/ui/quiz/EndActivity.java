@@ -1,9 +1,10 @@
 package com.jannuzzi.ecultureexperience.ui.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.jannuzzi.ecultureexperience.R;
 
 public class EndActivity extends AppCompatActivity {
     TextView tv_result;

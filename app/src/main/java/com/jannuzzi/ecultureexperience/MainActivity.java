@@ -28,6 +28,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jannuzzi.ecultureexperience.data.JSONParser;
 import com.jannuzzi.ecultureexperience.data.LoginDataSource;
 import com.jannuzzi.ecultureexperience.data.LoginRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
@@ -138,63 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private Path readPath(JsonReader reader) throws IOException {
-        String name = "";
-        String description = "";
-        String tag = "";
-        String imagePath = "";
-        String path = "";
-
-        reader.beginObject();
-        while(reader.hasNext()) {
-            String token = reader.nextName();
-            if ("name".equals(token)) {
-                name = reader.nextString();
-            } else if ("description".equals(token)) {
-                description = reader.nextString();
-            } else if ("tag".equals(token)) {
-                tag = reader.nextString();
-            } else if ("imagePath".equals(token)) {
-                imagePath = reader.nextString();
-            } else if ("path".equals(token)) {
-                path = reader.nextString();
-            }
-            else {
-                reader.skipValue();
-            }
-        }
-        reader.endObject();
-        return new Path(name, description, tag, imagePath, path);
-    }
-
-    private List<Path> parsePathJson(Intent data) throws IOException {
-        List<Path> pathList = new ArrayList<>();
-        InputStream stream = getContentResolver().openInputStream(data.getData());
-        JsonReader reader = new JsonReader(new InputStreamReader(stream));
-        reader.beginObject();
-        if("id".equals(reader.nextName())) {
-            String id = reader.nextString();
-            if(id.equals("")) {
-                throw new IOException();
-            }
-            for (String idPath:
-                 idList) {
-                if(idPath.equals(id)) {
-                    return null;
-                }
-            }
-            idList.add(id);
-        }
-        reader.nextName();
-        reader.beginArray();
-        while(reader.hasNext()) {
-            pathList.add(readPath(reader));
-        }
-        reader.endArray();
-        reader.endObject();
-        return pathList;
-    }
-
     private void displayPaths(List<Path> pathList) throws InterruptedException, IOException {
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
@@ -244,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) return;
         if (requestCode == JSON_CONFIG) {
             try {
-                List<Path> pathList = parsePathJson(data);
+                List<Path> pathList = JSONParser.parsePath(getContentResolver().openInputStream(data.getData()), idList);
                 if(pathList != null) {
                     displayPaths(pathList);
                 } else {
