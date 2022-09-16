@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
 import com.jannuzzi.ecultureexperience.data.JSONParser;
+import com.jannuzzi.ecultureexperience.data.User;
+import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.model.Route;
 
 import java.io.File;
@@ -127,20 +129,13 @@ public class RouteActivity extends AppCompatActivity {
     }
 
     private void updateBadgeCount() {
-        try {
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()) {
-                    Long oldValue = (Long) task.getResult().getValue();
-                    if(oldValue != null) {
-                        reference.child(uid).child("completedRoutes").setValue(++oldValue);
-                    }
-                }
-            });
-        } catch (NullPointerException e) {
-            Log.e("profile", "not logged, can't update");
-        }
+
+        UserRepository.getInstance().getCurrentUser(msg -> {
+            User user = (User) msg.obj;
+            user.completedRoutes++;
+            UserRepository.getInstance().updateCurrentUser(user);
+            return true;
+        });
     }
 
     private boolean checkIfCompleted(List<Route> instructions) {

@@ -1,7 +1,9 @@
 package com.jannuzzi.ecultureexperience;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +12,6 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +30,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.jannuzzi.ecultureexperience.data.JSONParser;
-import com.jannuzzi.ecultureexperience.data.LoginDataSource;
-import com.jannuzzi.ecultureexperience.data.LoginRepository;
+import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
+import com.jannuzzi.ecultureexperience.ui.qr.QrScanner;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
 import com.jannuzzi.ecultureexperience.ui.route.RouteActivity;
 
@@ -83,10 +84,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         try {
+            navigationView.getMenu().findItem( R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
             navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
                 logout();
                 finish();
                 goToLogin();
+                return true;
+            });
+            navigationView.getMenu().findItem( R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
+                Intent openQr = new Intent(MainActivity.this, QrScanner.class);
+                startActivity(openQr);
                 return true;
             });
         }
@@ -156,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle data = new Bundle();
                 data.putString("name", path.getName());
                 data.putString("description", path.getDescription());
+                data.putString("imgPath", path.getImagePath());
 
                 Intent intent = new Intent(this, RateActivity.class);
                 intent.putExtras(data);
@@ -202,7 +210,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     void logout(){
-        LoginRepository.getInstance(new LoginDataSource()).logout();
+        UserRepository.getInstance().logout();
+        for (String file: getApplicationContext().fileList()) {
+            getApplicationContext().deleteFile(file);
+        }
     }
 
     private void goToLogin() {

@@ -1,23 +1,21 @@
 package com.jannuzzi.ecultureexperience.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
-import com.jannuzzi.ecultureexperience.data.LoginDataSource;
-import com.jannuzzi.ecultureexperience.data.LoginRepository;
-import com.jannuzzi.ecultureexperience.data.model.LoggedInUser;
+import com.jannuzzi.ecultureexperience.data.UserRepository;
+import com.jannuzzi.ecultureexperience.data.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private LoggedInUser temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,39 +25,29 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        temp = LoginRepository.getInstance(new LoginDataSource()).getLoggedInUser();
         TextView nome = findViewById(R.id.profile_name);
-        nome.setText(temp.getDisplayName());
         TextView cognome = findViewById(R.id.profile_lastname);
-        cognome.setText(temp.getLastName());
         TextView email = findViewById(R.id.profile_email);
-        email.setText(temp.getEmail());
+        TextView routes = findViewById(R.id.paths_label);
+        TextView games = findViewById(R.id.games_label);
 
+        UserRepository.getInstance().getCurrentUser(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                User user = (User) msg.obj;
+                nome.setText(user.name);
+                cognome.setText(user.lastName);
+                email.setText(user.email);
+                routes.setText(String.valueOf(user.completedRoutes));
+                games.setText(String.valueOf(user.completedGames));
+                return true;
+            }
+        });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.child(uid).child("completedRoutes").get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                Long value = (Long) task.getResult().getValue();
-                if(value != null) {
-                    TextView routes = findViewById(R.id.paths_label);
-                    routes.setText(value.toString());
-                }
-            }
-        });
-        reference.child(uid).child("completedGames").get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                Long value = (Long) task.getResult().getValue();
-                if(value != null) {
-                    TextView games = findViewById(R.id.games_label);
-                    games.setText(value.toString());
-                }
             }
         });
     }
