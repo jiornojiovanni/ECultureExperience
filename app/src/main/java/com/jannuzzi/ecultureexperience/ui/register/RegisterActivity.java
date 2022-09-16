@@ -26,80 +26,46 @@ import com.jannuzzi.ecultureexperience.data.User;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
 
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //private RegisterViewModel registerViewModel;
-    //private ActivityRegisterBinding binding;
     private ScrollView View;
     private TextView login;
     private Button registerBtn;
-    private EditText editEmail,  editName, editLastName, editPassword, editAge;
-
-    // private ProgressBar; //used to show the classic loading feedback
-
+    private EditText editEmail, editName, editLastName, editPassword, editAge;
     private FirebaseAuth mAuth;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        //View = (ScrollView) findViewById(R.id.scrollView4);
-
         mAuth = FirebaseAuth.getInstance();
-/*
-        final EditText name = binding.name;
-        final EditText lastName = binding.Lastname;
-        final EditText age = binding.age;
-        final EditText editEmail = binding.emailReg;
-        final EditText editPassword = binding.passwordReg;
-        //final Button registerBtn = binding.register;
-        //final TextView login = binding.login;
-*/
 
-
-        //add loading registration bar
-        //final ProgressBar registrationProgressBar = binding.loading;
-
-        login=(TextView)findViewById(R.id.login);
+        login = (TextView) findViewById(R.id.login);
         login.setOnClickListener(this);
-
-        /*
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
 
         registerBtn = findViewById(R.id.register);
         registerBtn.setOnClickListener(this);
 
-        editEmail =(EditText)findViewById(R.id.email_reg);
-        editName=(EditText)findViewById(R.id.name);
-        editLastName=(EditText)findViewById(R.id.Lastname);
-        editPassword =(EditText)findViewById(R.id.password_reg);
-        editAge=(EditText)findViewById(R.id.age);
+        editEmail = (EditText) findViewById(R.id.email_reg);
+        editName = (EditText) findViewById(R.id.name);
+        editLastName = (EditText) findViewById(R.id.Lastname);
+        editPassword = (EditText) findViewById(R.id.password_reg);
+        editAge = (EditText) findViewById(R.id.age);
 
     }
 
     @Override
     public void onClick(View v) {
         //if is used instead of switch since id are not final
-        if(v.getId()==R.id.login) {
+        if (v.getId() == R.id.login) {
             finish();
             goToLogin();
-        }
-        else if(v.getId()==R.id.register){
-            if(editPassword.getText().toString().length()<8){
+        } else if (v.getId() == R.id.register) {
+            if (editPassword.getText().toString().length() < 8) {
                 Toast.makeText(this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
-            }
-            else if (!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()) {
                 Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
-            }
-            else if (editName.getText().toString().equals("")
+            } else if (editName.getText().toString().equals("")
                     || editLastName.getText().toString().equals("")
                     || editAge.getText().toString().equals("")
                     || editPassword.getText().toString().equals("")) {
@@ -128,39 +94,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         //add try and catch for firebase errors
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task1) {
-                        if(task1.isSuccessful()){
-                            User user = new User(name, lastName, age, email);
-                              DatabaseReference fb=FirebaseDatabase.getInstance().getReference("Users");
-                                    fb.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task2) {
-                                            if(task2.isSuccessful()){
-                                                Toast.makeText(RegisterActivity.this, "User has been registered succesfully", Toast.LENGTH_LONG).show();
-                                                mAuth.signOut();
-                                                finish();
-                                                goToLogin();
-                                                //redirect to login
-                                            }else{
-                                                try {
-                                                    throw task2.getException();
-                                                } catch(Exception e) {
-                                                    Log.e("eccezioneFB", e.getMessage());
-                                                }
-                                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_LONG).show();
-                                            }
-
-                                        }
-                                    });
-                        }else {
-                            Log.w("eccezione", task1.getException());
-                            Exception temp = task1.getException();
-                            Toast.makeText(RegisterActivity.this, "Failed to register user, Email already in use", Toast.LENGTH_LONG).show();
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        User user = new User(name, lastName, age, email);
+                        addOnDatabase(user);
+                    } else {
+                        try {
+                            throw task.getException();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), R.string.email_alreadyused, Toast.LENGTH_LONG).show();
                         }
                     }
+                });
+    }
+
+    private void addOnDatabase(User user) {
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference("Users");
+        fb.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(user).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), R.string.successfull_register, Toast.LENGTH_LONG).show();
+                        mAuth.signOut();
+                        finish();
+                        goToLogin();
+                        //redirect to login
+                    } else {
+                        try {
+                            throw task.getException();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), R.string.failed_register, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
                 });
     }
 }
