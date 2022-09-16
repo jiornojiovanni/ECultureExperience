@@ -47,4 +47,6 @@
     <string name="scan_qr">Scansione QR</string>
     <string name="completed_route">Hai completato il percorso!</string>
     <string name="action_search">Cerca</string>
+    <string name="correct">Corretto</string>
+    <string name="wrong">Sbagliato</string>
 </resources>

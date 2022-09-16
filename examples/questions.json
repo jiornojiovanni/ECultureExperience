@@ -1,0 +1,86 @@
+[
+  {
+    "question": "Quando fu inaugurato il Colosseo?",
+    "answers": [
+      {
+        "text": "80 d.C",
+        "correct": true
+      },
+      {
+        "text": "70 d.C",
+        "correct": false
+      },
+      {
+        "text": "60 d.C",
+        "correct": false
+      },
+      {
+        "text": "50 d.C",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "question": "Domande 2",
+    "answers": [
+      {
+        "text": "80 d.C",
+        "correct": true
+      },
+      {
+        "text": "70 d.C",
+        "correct": false
+      },
+      {
+        "text": "60 d.C",
+        "correct": false
+      },
+      {
+        "text": "50 d.C",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "question": "Domande 3",
+    "answers": [
+      {
+        "text": "80 d.C",
+        "correct": true
+      },
+      {
+        "text": "70 d.C",
+        "correct": false
+      },
+      {
+        "text": "60 d.C",
+        "correct": false
+      },
+      {
+        "text": "50 d.C",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "question": "Domande 4",
+    "answers": [
+      {
+        "text": "80 d.C",
+        "correct": true
+      },
+      {
+        "text": "70 d.C",
+        "correct": false
+      },
+      {
+        "text": "60 d.C",
+        "correct": false
+      },
+      {
+        "text": "50 d.C",
+        "correct": false
+      }
+    ]
+  }
+]

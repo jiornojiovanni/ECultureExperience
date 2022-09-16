@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.data.JSONParser;
 import com.jannuzzi.ecultureexperience.data.User;
 import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.model.Route;
@@ -56,9 +57,9 @@ public class RouteActivity extends AppCompatActivity {
 
         instructions = restoreState(pathFile);
         if(instructions == null) {
-            InputStream fileContent = readPathFile(pathFile);
+            InputStream fileContent = JSONParser.readFile("Download", pathFile);
             if(fileContent != null) {
-                instructions = parsePathFile(fileContent);
+                instructions = JSONParser.parseRoute(fileContent);
                 displayInstructions(instructions);
             } else {
                 Toast.makeText(this, R.string.route_error, Toast.LENGTH_LONG).show();
@@ -98,50 +99,6 @@ public class RouteActivity extends AppCompatActivity {
             ((TextView) view.findViewById(R.id.description)).setText(route.getDescription());
 
             layout.addView(row);
-        }
-    }
-
-    private InputStream readPathFile(String name) {
-        File file = new File(Environment.getExternalStorageDirectory()
-                + "/Download/" + name);
-        try {
-            return new FileInputStream(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private List<Route> parsePathFile(InputStream content) {
-        JsonReader reader = new JsonReader(new InputStreamReader(content));
-        List<Route> instructions = new ArrayList<>();
-        try {
-            reader.beginArray();
-
-            while (reader.hasNext()) {
-                String title = "";
-                String description = "";
-
-                reader.beginObject();
-                while (reader.hasNext()) {
-                    String token = reader.nextName();
-                    if ("title".equals(token)) {
-                        title = reader.nextString();
-                    } else if ("description".equals(token)) {
-                        description = reader.nextString();
-                    } else {
-                        reader.skipValue();
-                    }
-                }
-
-                reader.endObject();
-                instructions.add(new Route(title, description));
-            }
-
-            return instructions;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return instructions;
         }
     }
 
