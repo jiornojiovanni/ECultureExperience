@@ -21,64 +21,64 @@
     ]
   },
   {
-    "question": "Domande 2",
+    "question": "Quanti spettatori poteva ospitare?",
     "answers": [
       {
-        "text": "80 d.C",
+        "text": "10.000 - 15.000",
+        "correct": false
+      },
+      {
+        "text": "32.000 - 45.000",
+        "correct": false
+      },
+      {
+        "text": "50.000 - 87.000",
         "correct": true
       },
       {
-        "text": "70 d.C",
-        "correct": false
-      },
-      {
-        "text": "60 d.C",
-        "correct": false
-      },
-      {
-        "text": "50 d.C",
+        "text": "22.000 - 35.000",
         "correct": false
       }
     ]
   },
   {
-    "question": "Domande 3",
+    "question": "Qual'è il suo nome originario?",
     "answers": [
       {
-        "text": "80 d.C",
+        "text": "Colosseo Flavio",
         "correct": true
       },
       {
-        "text": "70 d.C",
+        "text": "Anfiteatro Mario",
         "correct": false
       },
       {
-        "text": "60 d.C",
+        "text": "Anfiteatro Flavio",
         "correct": false
       },
       {
-        "text": "50 d.C",
+        "text": "Colosseo di Vespasiano",
         "correct": false
       }
     ]
   },
   {
-    "question": "Domande 4",
+    "question": "Quale imperatore fece cominciare i lavori?",
     "answers": [
       {
-        "text": "80 d.C",
+        "text": "Ottaviano",
+        "correct": false
+      },
+      {
+        "text": "Vespasiano",
         "correct": true
       },
       {
-        "text": "70 d.C",
+        "text": "Domiziano",
         "correct": false
       },
       {
-        "text": "60 d.C",
-        "correct": false
-      },
-      {
-        "text": "50 d.C",
+        "text": "Flavio",
         "correct": false
       }
     ]

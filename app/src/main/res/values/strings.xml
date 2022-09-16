@@ -56,6 +56,7 @@
     <string name="completed_route">You completed the route!</string>
     <string name="correct">Correct</string>
     <string name="wrong">Wrong</string>
+    <string name="question_rating">How much did you like this route?</string>
 
 
 </resources>

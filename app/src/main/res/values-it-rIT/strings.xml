@@ -49,4 +49,5 @@
     <string name="action_search">Cerca</string>
     <string name="correct">Corretto</string>
     <string name="wrong">Sbagliato</string>
+    <string name="question_rating">Quanto ti è piaciuto questo percorso?</string>
 </resources>

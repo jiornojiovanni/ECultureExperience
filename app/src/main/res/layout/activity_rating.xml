@@ -82,7 +82,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
-                            android:text="Quanto ti è piaciuto questo percorso?"
+                            android:text="@string/question_rating"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="@color/brown_200"
                             android:textSize="16sp"
