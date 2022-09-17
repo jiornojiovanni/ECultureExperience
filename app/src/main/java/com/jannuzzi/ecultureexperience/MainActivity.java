@@ -12,11 +12,13 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,6 +27,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,6 +46,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private List<String> idList = new ArrayList<>();
     private StorageReference storageRef;
     private NavigationView navigationView;
-    private MenuItem searchBar;
+    private SearchView searchBar;
+    private MenuItem searchBarItem;
+    List<Path> pathList = new ArrayList<>();
+    List<Integer> idPaths = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +143,50 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        searchBar = menu.findItem(R.id.action_search);
+        searchBarItem = menu.findItem(R.id.action_search);
+        searchBar = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //move all this in its own method
+                boolean flag_found = false;
+                if(newText.length()>=1) {
+                    for (Path path : pathList) {
+                        if (!
+                                (path.getName().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT))
+                                        || path.getDescription().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT))
+                                        || path.getTag().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT)))
+                        ) {
+                            findViewById(idPaths.get(pathList.indexOf(path))).setVisibility(View.GONE);
+                        } else {
+                            flag_found = true;
+                            findViewById(idPaths.get(pathList.indexOf(path))).setVisibility(View.VISIBLE);
+                        }
+                    }
+                    if(!flag_found){
+                        findViewById(R.id.tvNoResults).setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        findViewById(R.id.tvNoResults).setVisibility(View.GONE);
+                    }
+                }
+                else if(newText.length()<=1){
+                    findViewById(R.id.tvNoResults).setVisibility(View.GONE);
+                    for (Path path : pathList) {
+                        View temp = findViewById(idPaths.get(pathList.indexOf(path)));
+                        temp.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                return false;
+            }
+        });
         return true;
     }
 
@@ -151,7 +202,10 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
 
         for (Path path: pathList) {
+            //LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
             LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
+
+
 
             ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
             ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
@@ -176,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
                 data.putString("pathFile", path.getPath());
                 Intent intent = new Intent(this, RouteActivity.class);
                 intent.putExtras(data);
-
                 startActivity(intent);
             });
 
@@ -186,9 +239,13 @@ public class MainActivity extends AppCompatActivity {
                 ((ShapeableImageView) layoutCard.findViewById(R.id.ivCard)).setImageBitmap(bmp);
             });
 
+            MaterialCardView card = (MaterialCardView) layoutCard.findViewById(R.id.card);
+            card.setId(View.generateViewId());
+            this.idPaths.add(card.getId());
+
             mainLayout.addView(layoutCard);
-            searchBar.setVisible(true);
         }
+        searchBarItem.setVisible(true);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -197,8 +254,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == JSON_CONFIG) {
             try {
                 List<Path> pathList = JSONParser.parsePath(getContentResolver().openInputStream(data.getData()), idList);
-                if(pathList != null) {
-                    displayPaths(pathList);
+                if(pathListTemp != null) {
+                    pathList.addAll(pathListTemp);
+                    displayPaths(pathListTemp);
                 } else {
                     Toast.makeText(this, R.string.file_already_loaded, Toast.LENGTH_LONG).show();
                 }
