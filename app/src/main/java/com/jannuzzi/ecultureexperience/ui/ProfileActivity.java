@@ -16,39 +16,38 @@ import com.jannuzzi.ecultureexperience.data.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    TextView nome, cognome, email, routes, games;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        UserRepository.getInstance().getCurrentUser(msg -> {
+            setupUI();
+
+            User user = (User) msg.obj;
+            nome.setText(user.name);
+            cognome.setText(user.lastName);
+            email.setText(user.email);
+            routes.setText(String.valueOf(user.completedRoutes));
+            games.setText(String.valueOf(user.completedGames));
+
+            return true;
+        });
+    }
+
+    private void setupUI() {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.profile);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView nome = findViewById(R.id.profile_name);
-        TextView cognome = findViewById(R.id.profile_lastname);
-        TextView email = findViewById(R.id.profile_email);
-        TextView routes = findViewById(R.id.paths_label);
-        TextView games = findViewById(R.id.games_label);
+        nome = findViewById(R.id.profile_name);
+        cognome = findViewById(R.id.profile_lastname);
+        email = findViewById(R.id.profile_email);
+        routes = findViewById(R.id.paths_label);
+        games = findViewById(R.id.games_label);
 
-        UserRepository.getInstance().getCurrentUser(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                User user = (User) msg.obj;
-                nome.setText(user.name);
-                cognome.setText(user.lastName);
-                email.setText(user.email);
-                routes.setText(String.valueOf(user.completedRoutes));
-                games.setText(String.valueOf(user.completedGames));
-                return true;
-            }
-        });
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 }
