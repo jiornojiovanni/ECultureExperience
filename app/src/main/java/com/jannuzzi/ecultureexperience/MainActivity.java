@@ -91,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        View headerView = navigationView.getHeaderView(0);
+        // get user name and email textViews
+        TextView email = headerView.findViewById(R.id.email);
+        TextView name = headerView.findViewById(R.id.name);
+        // set user name and email
+        name.setText("Nome");
+        email.setText("email.user@domain.com");
         try {
             navigationView.getMenu().findItem( R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
             navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
