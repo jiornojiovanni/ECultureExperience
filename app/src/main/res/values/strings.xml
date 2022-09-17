@@ -62,4 +62,5 @@
     <string name="failed_register">Failed to register user.</string>
     <string name="question_rating">How much did you like this route?</string>
     <string name="qr_invalid">Not valid QR Code.</string>
+    <string name="results">Results</string>
 </resources>

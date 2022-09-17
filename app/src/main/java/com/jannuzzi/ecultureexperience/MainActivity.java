@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.jannuzzi.ecultureexperience.data.JSONParser;
+import com.jannuzzi.ecultureexperience.data.User;
 import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
@@ -90,6 +93,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View headerView = navigationView.getHeaderView(0);
+        // get user name and email textViews
+        TextView email = headerView.findViewById(R.id.email);
+        TextView name = headerView.findViewById(R.id.name);
+        // set user name and email
+        UserRepository.getInstance().getCurrentUser(msg -> {
+            User user = (User) msg.obj;
+            name.setText(user.name);
+            email.setText(user.email);
+            return true;
+        });
+
 
         try {
             navigationView.getMenu().findItem( R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
