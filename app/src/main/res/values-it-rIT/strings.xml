@@ -30,8 +30,6 @@
     <string name="fill_fields">Riempi tutti i campi prima di procedere.</string>
     <string name="generic_login_error">Errore di esecuzione</string>
     <string name="Database_connection_error">Impossibile stabilire la connessione, riprova più tardi</string>
-
-
     <string name="succesful_permission">Permessi ricevuti, puoi caricare il file adesso.</string>
     <string name="refused_permission">Permessi rifiutati, non puoi procedere con il caricamento del file.</string>
     <string name="error_loading">Non è possibile caricare il file. Formato non valido.</string>
@@ -48,4 +46,10 @@
     <string name="completed_route">Hai completato il percorso!</string>
     <string name="action_search">Cerca</string>
     <string name="No_search_results">Nessun risultato</string>
+    <string name="correct">Corretto</string>
+    <string name="wrong">Sbagliato</string>
+    <string name="email_alreadyused">Registrazione fallita, email già in uso.</string>
+    <string name="successfull_register">Registrazione effettuata con successo.</string>
+    <string name="failed_register">Registrazione fallita.</string>
+    <string name="question_rating">Quanto ti è piaciuto questo percorso?</string>
 </resources>

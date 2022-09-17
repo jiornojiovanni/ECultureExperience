@@ -10,8 +10,8 @@
         },
         {
             "name": "Colosseo",
-            "description": "Descrizione del colosseo etc. etc.",
-            "tag": "monumento, antico",
+            "description": "Percorso da Piazza di Spagna al Colosseo",
+            "tag": "monumento, Antica Roma, Gladiatori",
             "imagePath": "colosseo.jpg",
             "path": "PiazzaSpagna-Colosseo.txt"
         },
