@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(view -> {
-            if( checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 pickFile();
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this,
@@ -92,20 +92,19 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         try {
-            navigationView.getMenu().findItem( R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
-            navigationView.getMenu().findItem( R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+            navigationView.getMenu().findItem(R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
+            navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
                 logout();
                 finish();
                 goToLogin();
                 return true;
             });
-            navigationView.getMenu().findItem( R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
+            navigationView.getMenu().findItem(R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
                 Intent openQr = new Intent(MainActivity.this, QrScanner.class);
                 startActivity(openQr);
                 return true;
             });
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Log.w("NAVBAR", e);
         }
 
@@ -148,42 +147,42 @@ public class MainActivity extends AppCompatActivity {
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //move all this in its own method
-                boolean flag_found = false;
-                if(newText.length()>=1) {
+                boolean found_something = false;
+
+                if (newText.length() >= 1) {
                     for (Path path : pathList) {
-                        if (!
-                                (path.getName().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT))
-                                        || path.getDescription().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT))
-                                        || path.getTag().toUpperCase(Locale.ROOT).contains(newText.toUpperCase(Locale.ROOT)))
-                        ) {
-                            findViewById(idPaths.get(pathList.indexOf(path))).setVisibility(View.GONE);
-                        } else {
-                            flag_found = true;
+
+                        String input = newText.toUpperCase(Locale.ROOT);
+                        String name = path.getName().toUpperCase(Locale.ROOT);
+                        String description = path.getDescription().toUpperCase(Locale.ROOT);
+                        String tag = path.getTag().toUpperCase(Locale.ROOT);
+
+                        if (name.contains(input) || description.contains(input) || tag.contains(input)) {
                             findViewById(idPaths.get(pathList.indexOf(path))).setVisibility(View.VISIBLE);
+                            found_something = true;
+                        } else {
+                            findViewById(idPaths.get(pathList.indexOf(path))).setVisibility(View.GONE);
                         }
                     }
-                    if(!flag_found){
+
+                    if (found_something) {
+                        findViewById(R.id.tvNoResults).setVisibility(View.GONE);
+                    } else {
                         findViewById(R.id.tvNoResults).setVisibility(View.VISIBLE);
                     }
-                    else {
-                        findViewById(R.id.tvNoResults).setVisibility(View.GONE);
-                    }
-                }
-                else if(newText.length()<=1){
+
+                } else {
                     findViewById(R.id.tvNoResults).setVisibility(View.GONE);
                     for (Path path : pathList) {
                         View temp = findViewById(idPaths.get(pathList.indexOf(path)));
                         temp.setVisibility(View.VISIBLE);
                     }
                 }
-
                 return false;
             }
         });
@@ -201,10 +200,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
 
-        for (Path path: pathList) {
+        for (Path path : pathList) {
             //LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
             LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
-
 
 
             ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == JSON_CONFIG) {
             try {
                 List<Path> pathListTemp = JSONParser.parsePath(getContentResolver().openInputStream(data.getData()), idList);
-                if(pathListTemp != null) {
+                if (pathListTemp != null) {
                     pathList.addAll(pathListTemp);
                     displayPaths(pathListTemp);
                 } else {
@@ -267,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void logout(){
+    void logout() {
         UserRepository.getInstance().logout();
-        for (String file: getApplicationContext().fileList()) {
+        for (String file : getApplicationContext().fileList()) {
             getApplicationContext().deleteFile(file);
         }
     }
