@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) return;
         if (requestCode == JSON_CONFIG) {
             try {
-                List<Path> pathList = JSONParser.parsePath(getContentResolver().openInputStream(data.getData()), idList);
+                List<Path> pathListTemp = JSONParser.parsePath(getContentResolver().openInputStream(data.getData()), idList);
                 if(pathListTemp != null) {
                     pathList.addAll(pathListTemp);
                     displayPaths(pathListTemp);
