@@ -61,4 +61,5 @@
     <string name="successfull_register">User has been registered successfully.</string>
     <string name="failed_register">Failed to register user.</string>
     <string name="question_rating">How much did you like this route?</string>
+    <string name="results">Results</string>
 </resources>

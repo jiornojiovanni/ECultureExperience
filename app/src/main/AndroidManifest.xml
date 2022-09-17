@@ -68,12 +68,17 @@
             android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.quiz.QuizActivity"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"
             android:exported="true" />
-        <activity android:name=".ui.quiz.EndActivity" />
+        <activity android:name=".ui.quiz.EndActivity"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"
+            android:exported="true"/>
         <activity
             android:name=".ui.qr.QrScanner"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"
+           />
         <activity
             android:name=".ui.qr.Capture"
             android:screenOrientation="fullSensor"
