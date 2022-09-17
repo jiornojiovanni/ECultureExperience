@@ -21,20 +21,17 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserRepository.getInstance().getCurrentUser(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                setupUI();
+        UserRepository.getInstance().getCurrentUser(msg -> {
+            setupUI();
 
-                User user = (User) msg.obj;
-                nome.setText(user.name);
-                cognome.setText(user.lastName);
-                email.setText(user.email);
-                routes.setText(String.valueOf(user.completedRoutes));
-                games.setText(String.valueOf(user.completedGames));
+            User user = (User) msg.obj;
+            nome.setText(user.name);
+            cognome.setText(user.lastName);
+            email.setText(user.email);
+            routes.setText(String.valueOf(user.completedRoutes));
+            games.setText(String.valueOf(user.completedGames));
 
-                return true;
-            }
+            return true;
         });
     }
 
