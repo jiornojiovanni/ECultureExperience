@@ -28,13 +28,6 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
-
-        tv_question = findViewById(R.id.question);
-        b_answer1 = findViewById(R.id.answer1);
-        b_answer2 = findViewById(R.id.answer2);
-        b_answer3 = findViewById(R.id.answer3);
-        b_answer4 = findViewById(R.id.answer4);
 
         String questionFile = getIntent().getExtras().getString("Name");
         View.OnClickListener listener = view -> {
@@ -54,6 +47,7 @@ public class QuizActivity extends AppCompatActivity {
 
         FirebaseStorage.getInstance().getReference("Questions").child(questionFile).getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(task -> {
+                    setupUI();
                     ByteArrayInputStream stream = new ByteArrayInputStream(task);
 
                     questionItems = JSONParser.parseQuestions(stream);
@@ -65,7 +59,22 @@ public class QuizActivity extends AppCompatActivity {
                     b_answer2.setOnClickListener(listener);
                     b_answer3.setOnClickListener(listener);
                     b_answer4.setOnClickListener(listener);
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), R.string.qr_invalid, Toast.LENGTH_LONG).show();
+                    finish();
                 });
+    }
+
+    private void setupUI() {
+        setContentView(R.layout.activity_quiz);
+
+        tv_question = findViewById(R.id.question);
+        b_answer1 = findViewById(R.id.answer1);
+        b_answer2 = findViewById(R.id.answer2);
+        b_answer3 = findViewById(R.id.answer3);
+        b_answer4 = findViewById(R.id.answer4);
     }
 
     private void advanceQuiz() {
