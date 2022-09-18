@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -105,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), R.string.invalid_credentials, Toast.LENGTH_LONG).show();
                     } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
                         Toast.makeText(LoginActivity.this, R.string.invalid_login_password, Toast.LENGTH_LONG).show();
+                    } else if(e instanceof FirebaseNetworkException) {
+                        Toast.makeText(LoginActivity.this, R.string.not_connected, Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(LoginActivity.this, R.string.generic_login_error, Toast.LENGTH_LONG).show();
                     }

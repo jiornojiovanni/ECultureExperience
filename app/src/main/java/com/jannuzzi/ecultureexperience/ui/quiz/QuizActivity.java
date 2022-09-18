@@ -12,10 +12,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.Utility;
 import com.jannuzzi.ecultureexperience.data.JSONParser;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
@@ -62,6 +62,11 @@ public class QuizActivity extends AppCompatActivity {
                 advanceQuiz();
             }
         };
+
+        if (!Utility.isInternetAvailable(this)) {
+            Toast.makeText(getApplicationContext(), R.string.not_connected, Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         FirebaseStorage.getInstance().getReference("Questions").child(questionFile).getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(task -> {
