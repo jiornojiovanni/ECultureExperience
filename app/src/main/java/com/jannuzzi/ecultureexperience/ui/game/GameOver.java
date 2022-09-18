@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jannuzzi.ecultureexperience.R;
+import com.jannuzzi.ecultureexperience.data.User;
+import com.jannuzzi.ecultureexperience.data.UserRepository;
 
 public class GameOver extends AppCompatActivity {
 
@@ -30,6 +32,17 @@ public class GameOver extends AppCompatActivity {
     }
 
     public void exit(View view) {
+        updateGameCount();
         finish();
+    }
+    
+    private void updateGameCount() {
+
+        UserRepository.getInstance().getCurrentUser(msg -> {
+            User user = (User) msg.obj;
+            user.completedGames++;
+            UserRepository.getInstance().updateCurrentUser(user);
+            return true;
+        });
     }
 }
