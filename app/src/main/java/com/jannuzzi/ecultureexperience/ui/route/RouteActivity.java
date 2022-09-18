@@ -63,6 +63,7 @@ public class RouteActivity extends AppCompatActivity {
                 displayInstructions(instructions);
             } else {
                 Toast.makeText(this, R.string.route_error, Toast.LENGTH_LONG).show();
+                finish();
             }
         } else {
             displayInstructions(instructions);
