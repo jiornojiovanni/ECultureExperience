@@ -32,7 +32,7 @@
     <string name="completed_routes">Completed routes</string>
     <string name="completed_games">Completed games</string>
     <string name="loading">Loading...</string>
-    <string name="load_json">Load your path json</string>
+    <string name="load_json">Load your path file</string>
     <string name="rate">Rate</string>
     <string name="rate_shared">Thanks for your feedback!</string>
     <string name="succesful_permission">Permission received, now you can load the file</string>
@@ -65,4 +65,5 @@
     <string name="or">or</string>
     <string name="guest_login">Login as a Guest</string>
     <string name="not_connected">Not connected</string>
+    <string name="not_logged">You are currently not logged.</string>
 </resources>

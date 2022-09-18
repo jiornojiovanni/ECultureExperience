@@ -29,6 +29,12 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!Utility.isInternetAvailable(this)) {
+           Toast.makeText(this, R.string.not_connected, Toast.LENGTH_LONG).show();
+           finish();
+        }
+
         setContentView(R.layout.activity_quiz);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -81,6 +87,10 @@ public class QuizActivity extends AppCompatActivity {
                     b_answer2.setOnClickListener(listener);
                     b_answer3.setOnClickListener(listener);
                     b_answer4.setOnClickListener(listener);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, R.string.error_loading, Toast.LENGTH_LONG).show();
+                    finish();
                 });
     }
 
