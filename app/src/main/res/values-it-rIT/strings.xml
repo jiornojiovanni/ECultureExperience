@@ -24,7 +24,7 @@
     <string name="completed_routes">Percorsi completati</string>
     <string name="completed_games">Giochi completati</string>
     <string name="loading">Caricamento...</string>
-    <string name="load_json">Carica il percorso json</string>
+    <string name="load_json">Carica il percorso da file</string>
     <string name="rate">Valuta</string>
     <string name="rate_shared">Grazie del tuo feedback!</string>
     <string name="fill_fields">Riempi tutti i campi prima di procedere.</string>
@@ -56,4 +56,5 @@
     <string name="or">oppure</string>
     <string name="guest_login">Accedi come Guest</string>
     <string name="not_connected">Non connesso</string>
+    <string name="not_logged">Non hai effettuato il login.</string>
 </resources>

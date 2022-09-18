@@ -63,23 +63,27 @@ public class UserRepository {
     }
 
     public void getCurrentUser(Handler.Callback callback) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseDatabase.getInstance().getReference("Users").child(uid).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Message msg = Message.obtain();
-                        msg.obj = task.getResult().getValue(User.class);
-                        callback.handleMessage(msg);
-                    }
-                });
+        try {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference("Users").child(uid).get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Message msg = Message.obtain();
+                            msg.obj = task.getResult().getValue(User.class);
+                            callback.handleMessage(msg);
+                        }
+                    });
+        } catch (NullPointerException e) {}
+
 
     }
 
     public void updateCurrentUser(User user) {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user, (error, ref) -> {
+        try {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference("Users").child(uid).setValue(user, (error, ref) -> {
 
-        });
-
+            });
+        } catch (NullPointerException e) {}
     }
 }
