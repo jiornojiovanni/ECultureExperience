@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ECultureExperience</string>
     <string name="navigation_drawer_open">Apri il menu di navigazione</string>
     <string name="navigation_drawer_close">Chiudi il menu di navigazione</string>
     <string name="action_settings">Impostazioni</string>
