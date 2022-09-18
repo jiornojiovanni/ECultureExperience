@@ -21,18 +21,22 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserRepository.getInstance().getCurrentUser(msg -> {
+        if(getIntent().getBooleanExtra("guest", false)) {
             setupUI();
+        } else {
+            UserRepository.getInstance().getCurrentUser(msg -> {
+                setupUI();
 
-            User user = (User) msg.obj;
-            nome.setText(user.name);
-            cognome.setText(user.lastName);
-            email.setText(user.email);
-            routes.setText(String.valueOf(user.completedRoutes));
-            games.setText(String.valueOf(user.completedGames));
+                User user = (User) msg.obj;
+                nome.setText(user.name);
+                cognome.setText(user.lastName);
+                email.setText(user.email);
+                routes.setText(String.valueOf(user.completedRoutes));
+                games.setText(String.valueOf(user.completedGames));
 
-            return true;
-        });
+                return true;
+            });
+        }
     }
 
     private void setupUI() {
