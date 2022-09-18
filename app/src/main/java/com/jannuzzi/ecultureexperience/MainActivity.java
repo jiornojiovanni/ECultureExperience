@@ -39,6 +39,7 @@ import com.jannuzzi.ecultureexperience.data.User;
 import com.jannuzzi.ecultureexperience.data.UserRepository;
 import com.jannuzzi.ecultureexperience.data.Path;
 import com.jannuzzi.ecultureexperience.databinding.ActivityMainBinding;
+import com.jannuzzi.ecultureexperience.ui.ProfileActivity;
 import com.jannuzzi.ecultureexperience.ui.login.LoginActivity;
 import com.jannuzzi.ecultureexperience.ui.qr.QrScanner;
 import com.jannuzzi.ecultureexperience.ui.rate.RateActivity;
@@ -99,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         TextView email = headerView.findViewById(R.id.email);
         TextView name = headerView.findViewById(R.id.name);
         // set user name and email
-        UserRepository.getInstance().getCurrentUser(msg -> {
-            User user = (User) msg.obj;
-            name.setText(user.name);
-            email.setText(user.email);
-            return true;
-        });
-
-
+        if (!getIntent().getBooleanExtra("guest", false)) {
+            UserRepository.getInstance().getCurrentUser(msg -> {
+                User user = (User) msg.obj;
+                name.setText(user.name);
+                email.setText(user.email);
+                return true;
+            });
+        }
         try {
             navigationView.getMenu().findItem(R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
             navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
@@ -114,6 +115,23 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 goToLogin();
                 return true;
+            });
+            navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(menuItem -> {
+                if(getIntent().getBooleanExtra("guest", false)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("guest", true);
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    return true;
+                } else if (!Utility.isInternetAvailable(this)) {
+                    Toast.makeText(this, R.string.not_connected, Toast.LENGTH_LONG).show();
+                    return true;
+                } else {
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
             });
             navigationView.getMenu().findItem(R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
                 Intent openQr = new Intent(MainActivity.this, QrScanner.class);

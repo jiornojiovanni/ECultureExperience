@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final TextView signup = binding.actionSignIn;
+        final TextView guestButton = binding.guestLogin;
         loadingProgressBar = binding.loading;
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 goToRegister();
             }
+        });
+
+        guestButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("guest", true);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
     }
 
