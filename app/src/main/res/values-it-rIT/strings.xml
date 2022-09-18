@@ -53,4 +53,6 @@
     <string name="failed_register">Registrazione fallita.</string>
     <string name="question_rating">Quanto ti è piaciuto questo percorso?</string>
     <string name="results">Risultati</string>
+    <string name="or">oppure</string>
+    <string name="guest_login">Accedi come Guest</string>
 </resources>

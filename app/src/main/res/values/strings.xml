@@ -62,4 +62,6 @@
     <string name="failed_register">Failed to register user.</string>
     <string name="question_rating">How much did you like this route?</string>
     <string name="results">Results</string>
+    <string name="or">or</string>
+    <string name="guest_login">Login as a Guest</string>
 </resources>
