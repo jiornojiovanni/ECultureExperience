@@ -53,4 +53,5 @@
     <string name="failed_register">Registrazione fallita.</string>
     <string name="question_rating">Quanto ti è piaciuto questo percorso?</string>
     <string name="qr_invalid">Codice QR non valido.</string>
+    <string name="not_connected">Non sei connesso a internet.</string>
 </resources>

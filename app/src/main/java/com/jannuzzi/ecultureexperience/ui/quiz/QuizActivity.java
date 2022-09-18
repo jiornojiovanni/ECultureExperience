@@ -1,6 +1,9 @@
 package com.jannuzzi.ecultureexperience.ui.quiz;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import com.jannuzzi.ecultureexperience.data.JSONParser;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
@@ -44,6 +48,11 @@ public class QuizActivity extends AppCompatActivity {
                 advanceQuiz();
             }
         };
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(getApplicationContext(), R.string.not_connected, Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         FirebaseStorage.getInstance().getReference("Questions").child(questionFile).getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(task -> {
@@ -96,5 +105,12 @@ public class QuizActivity extends AppCompatActivity {
         b_answer2.setText(questionItems.get(number).getAnswers().get(1).getText());
         b_answer3.setText(questionItems.get(number).getAnswers().get(2).getText());
         b_answer4.setText(questionItems.get(number).getAnswers().get(3).getText());
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return conMgr.getActiveNetworkInfo() != null
+                && conMgr.getActiveNetworkInfo().isAvailable()
+                && conMgr.getActiveNetworkInfo().isConnected();
     }
 }
