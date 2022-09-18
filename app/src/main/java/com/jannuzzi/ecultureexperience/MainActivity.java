@@ -105,8 +105,17 @@ public class MainActivity extends AppCompatActivity {
                 User user = (User) msg.obj;
                 name.setText(user.name);
                 email.setText(user.email);
+                mAppBarConfiguration = new AppBarConfiguration.Builder(
+                        R.id.nav_home, R.id.nav_logout, R.id.nav_qr)
+                        .setOpenableLayout(drawer)
+                        .build();
                 return true;
             });
+        } else {
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_home, R.id.nav_logout, R.id.nav_qr, R.id.nav_profile)
+                    .setOpenableLayout(drawer)
+                    .build();
         }
         try {
             navigationView.getMenu().findItem(R.id.nav_home).setOnMenuItemClickListener(menuItem -> true);
@@ -117,21 +126,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             });
             navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(menuItem -> {
-                if(getIntent().getBooleanExtra("guest", false)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("guest", true);
-                    Intent intent = new Intent(this, ProfileActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    return true;
-                } else if (!Utility.isInternetAvailable(this)) {
+                if (!Utility.isInternetAvailable(this)) {
                     Toast.makeText(this, R.string.not_connected, Toast.LENGTH_LONG).show();
-                    return true;
                 } else {
                     Intent intent = new Intent(this, ProfileActivity.class);
                     startActivity(intent);
-                    return true;
                 }
+                return true;
             });
             navigationView.getMenu().findItem(R.id.nav_qr).setOnMenuItemClickListener(menuItem -> {
                 Intent openQr = new Intent(MainActivity.this, QrScanner.class);

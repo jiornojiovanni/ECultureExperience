@@ -17,26 +17,22 @@ import com.jannuzzi.ecultureexperience.data.User;
 public class ProfileActivity extends AppCompatActivity {
 
     TextView nome, cognome, email, routes, games;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(getIntent().getBooleanExtra("guest", false)) {
+        UserRepository.getInstance().getCurrentUser(msg -> {
             setupUI();
-        } else {
-            UserRepository.getInstance().getCurrentUser(msg -> {
-                setupUI();
 
-                User user = (User) msg.obj;
-                nome.setText(user.name);
-                cognome.setText(user.lastName);
-                email.setText(user.email);
-                routes.setText(String.valueOf(user.completedRoutes));
-                games.setText(String.valueOf(user.completedGames));
+            User user = (User) msg.obj;
+            nome.setText(user.name);
+            cognome.setText(user.lastName);
+            email.setText(user.email);
+            routes.setText(String.valueOf(user.completedRoutes));
+            games.setText(String.valueOf(user.completedGames));
 
-                return true;
-            });
-        }
+            return true;
+        });
     }
 
     private void setupUI() {
