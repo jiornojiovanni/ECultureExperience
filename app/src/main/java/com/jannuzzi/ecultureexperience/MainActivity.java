@@ -230,41 +230,21 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.removeView(findViewById(R.id.tvLoadPath));
 
         for (Path path : pathList) {
-            //LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
             LinearLayout layoutCard = (LinearLayout) getLayoutInflater().inflate(R.layout.row_percorsi, null);
-
 
             ((TextView) layoutCard.findViewById(R.id.cardTitle)).setText(path.getName());
             ((TextView) layoutCard.findViewById(R.id.tvCardSecond)).setText(path.getDescription());
             ((TextView) layoutCard.findViewById(R.id.tvCardSupport)).setText(path.getTag());
 
             layoutCard.findViewById(R.id.rateButton).setOnClickListener(view -> {
-                layoutCard.findViewById(R.id.rateButton).setEnabled(false);
-
-                Bundle data = new Bundle();
-                data.putString("name", path.getName());
-                data.putString("description", path.getDescription());
-                data.putString("imgPath", path.getImagePath());
-
-                Intent intent = new Intent(this, RateActivity.class);
-                intent.putExtras(data);
-
-                startActivity(intent);
+                rateListener(path, layoutCard);
             });
 
             layoutCard.findViewById(R.id.card).setOnClickListener(view -> {
-                Bundle data = new Bundle();
-                data.putString("pathFile", path.getPath());
-                Intent intent = new Intent(this, RouteActivity.class);
-                intent.putExtras(data);
-                startActivity(intent);
+                cardListener(path);
             });
 
-            StorageReference imgPath = storageRef.child(path.getImagePath());
-            imgPath.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ((ShapeableImageView) layoutCard.findViewById(R.id.ivCard)).setImageBitmap(bmp);
-            });
+            loadImg(path, layoutCard);
 
             MaterialCardView card = (MaterialCardView) layoutCard.findViewById(R.id.card);
             card.setId(View.generateViewId());
@@ -273,6 +253,36 @@ public class MainActivity extends AppCompatActivity {
             mainLayout.addView(layoutCard);
         }
         searchBarItem.setVisible(true);
+    }
+
+    private void loadImg(Path path, LinearLayout layoutCard) {
+        StorageReference imgPath = storageRef.child(path.getImagePath());
+        imgPath.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ((ShapeableImageView) layoutCard.findViewById(R.id.ivCard)).setImageBitmap(bmp);
+        });
+    }
+
+    private void cardListener(Path path) {
+        Bundle data = new Bundle();
+        data.putString("pathFile", path.getPath());
+        Intent intent = new Intent(this, RouteActivity.class);
+        intent.putExtras(data);
+        startActivity(intent);
+    }
+
+    private void rateListener(Path path, LinearLayout layoutCard) {
+        layoutCard.findViewById(R.id.rateButton).setEnabled(false);
+
+        Bundle data = new Bundle();
+        data.putString("name", path.getName());
+        data.putString("description", path.getDescription());
+        data.putString("imgPath", path.getImagePath());
+
+        Intent intent = new Intent(this, RateActivity.class);
+        intent.putExtras(data);
+
+        startActivity(intent);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
