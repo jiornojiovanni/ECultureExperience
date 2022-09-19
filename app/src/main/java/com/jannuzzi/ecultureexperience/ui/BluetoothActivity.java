@@ -42,7 +42,7 @@ public class BluetoothActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bluetooth);
         bluetooth_button = findViewById(R.id.bluetooth_button);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.rate);
+        toolbar.setTitle(R.string.scan_bluetooth);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -92,6 +92,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.device_found, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, StartUp.class);
                     startActivity(intent);
+                    return;
                 }
             }
         }
