@@ -67,4 +67,8 @@
     <string name="not_connected">Not connected</string>
     <string name="not_logged">You are currently not logged.</string>
     <string name="answer">Correct %d Wrong %d</string>
+    <string name="activate_bluetooth">You need to activate bluetooth to use this feature</string>
+    <string name="bluetooth_success">Now you can use this bluetooth feature</string>
+    <string name="device_found">Device found</string>
+    <string name="not_found">You need to pair your phone with the correct device.</string>
 </resources>
