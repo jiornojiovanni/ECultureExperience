@@ -66,4 +66,5 @@
     <string name="guest_login">Login as a Guest</string>
     <string name="not_connected">Not connected</string>
     <string name="not_logged">You are currently not logged.</string>
+    <string name="answer">Correct %d Wrong %d</string>
 </resources>

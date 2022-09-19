@@ -31,7 +31,7 @@ public class EndActivity extends AppCompatActivity {
         int correct= getIntent().getIntExtra("correct", 0);
         int wrong= getIntent().getIntExtra("wrong", 0);
 
-        tv_result.setText("Correct "+ correct+ "\nWrong "+ wrong);
+        tv_result.setText(getString(R.string.answer, correct, wrong));
 
     }
 }

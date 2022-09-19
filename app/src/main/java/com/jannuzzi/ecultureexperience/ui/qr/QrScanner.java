@@ -78,8 +78,6 @@ public class QrScanner extends AppCompatActivity {
 
                 startActivity(intent);
             }
-
-
         } else {
             Toast.makeText(getApplicationContext(), "OOPS... You didn't scan anything", Toast.LENGTH_SHORT).show();
 
