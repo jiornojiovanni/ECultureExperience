@@ -19,6 +19,7 @@
         android:theme="@style/Theme.ECultureExperience">
         <activity
             android:name=".ui.BluetoothActivity"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

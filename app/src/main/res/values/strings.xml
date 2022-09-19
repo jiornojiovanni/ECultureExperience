@@ -71,4 +71,7 @@
     <string name="bluetooth_success">Now you can use this bluetooth feature</string>
     <string name="device_found">Device found</string>
     <string name="not_found">You need to pair your phone with the correct device.</string>
+    <string name="connect">Connect</string>
+    <string name="game_istruction">Instructions: pair with a device called a \"game\" to use this feature</string>
+    <string name="scan_bluetooth">Interactions BT</string>
 </resources>

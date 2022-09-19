@@ -61,4 +61,7 @@
     <string name="bluetooth_success">Ora puoi usare questa feature bluetooth.</string>
     <string name="activate_bluetooth">Devi attivare il bluetooth per usare questa feature.</string>
     <string name="not_found">Devi effettuare il pairing del tuo telefono col dispositivo giusto.</string>
+    <string name="connect">Connetti</string>
+    <string name="game_istruction">Istruzioni: effettuare il pairing con un dispositivo chiamato \"gioco\" per usare questa feature</string>
+    <string name="scan_bluetooth">Interazioni BT</string>
 </resources>
