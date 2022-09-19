@@ -27,4 +27,8 @@
         android:name="com.jannuzzi.ecultureexperience.ui.ProfileActivity"
         android:label="activity_profile"
         tools:layout="@layout/activity_profile" />
+    <activity
+        android:id="@+id/nav_bluetooth"
+        android:name="com.jannuzzi.ecultureexperience.ui.BluetoothActivity"
+        android:label="BluetoothActivity" />
 </navigation>

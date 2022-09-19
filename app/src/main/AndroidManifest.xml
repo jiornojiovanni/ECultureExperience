@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.jannuzzi.ecultureexperience">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -15,6 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ECultureExperience">
+        <activity
+            android:name=".ui.BluetoothActivity"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.ProfileActivity"
             android:configChanges="orientation|screenSize"
@@ -32,6 +42,7 @@
             android:theme="@style/Theme.ECultureExperience.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -60,30 +71,36 @@
         <activity
             android:name=".ui.game.StartUp"
             android:exported="true"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.game.GameActivity"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.game.GameOver"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.quiz.QuizActivity"
-            android:theme="@style/Theme.ECultureExperience.NoActionBar"
-            android:exported="true" />
-        <activity android:name=".ui.quiz.EndActivity"
-            android:theme="@style/Theme.ECultureExperience.NoActionBar"
-            android:exported="true"/>
+            android:exported="true"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar" />
+        <activity
+            android:name=".ui.quiz.EndActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.qr.QrScanner"
             android:configChanges="orientation|screenSize"
             android:exported="false"
-            android:theme="@style/Theme.ECultureExperience.NoActionBar"
-           />
+            android:theme="@style/Theme.ECultureExperience.NoActionBar" />
         <activity
             android:name=".ui.qr.Capture"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
